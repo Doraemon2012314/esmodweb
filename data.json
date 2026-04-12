@@ -1,11 +1,22 @@
 {
-  "total_cases": 3,
+  "total_cases": 4,
   "cases_by_type": {
-    "ban": 1,
+    "ban": 2,
     "exploit": 1,
     "warning": 1
   },
   "cases": [
+    {
+      "case_id": "KBQDI49L",
+      "type": "ban",
+      "target": "test2",
+      "timestamp": "2026-04-12 06:44:22.518435",
+      "moderator": "1252174197816561705",
+      "additional_info": "He causing lag",
+      "status": "Awaiting",
+      "old_rank": "",
+      "new_rank": ""
+    },
     {
       "case_id": "UBO3PQ7C",
       "type": "ban",
@@ -43,12 +54,12 @@
   "moderators": [
     {
       "id": "1252174197816561705",
-      "total": 3,
+      "total": 4,
       "warnings": 1,
-      "bans": 1,
+      "bans": 2,
       "demotions": 0,
       "exploits": 1
     }
   ],
-  "last_updated": "2026-04-12T06:44:17.104330"
+  "last_updated": "2026-04-12T06:44:22.523371"
 }
