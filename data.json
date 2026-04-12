@@ -14,7 +14,7 @@
       "timestamp": "2026-04-12 12:15:57.312584",
       "moderator": "1277239780425465929",
       "additional_info": "Test",
-      "status": "Awaiting",
+      "status": "APPROVED",
       "old_rank": "",
       "new_rank": ""
     },
@@ -81,5 +81,5 @@
       "exploits": 0
     }
   ],
-  "last_updated": "2026-04-12T12:16:07.735019"
+  "last_updated": "2026-04-12T12:16:11.945484"
 }
