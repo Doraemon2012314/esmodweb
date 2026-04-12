@@ -1,42 +1,7 @@
 {
-  "total_cases": 2,
-  "cases_by_type": {
-    "demotion": 2
-  },
-  "cases": [
-    {
-      "case_id": "ZOOSS2HL",
-      "type": "demotion",
-      "target": "test2",
-      "timestamp": "2026-04-12 02:03:40.764331",
-      "moderator": "1252174197816561705",
-      "additional_info": "",
-      "status": "Awaiting",
-      "old_rank": "Head Host",
-      "new_rank": "Soldier"
-    },
-    {
-      "case_id": "D5G1EYGJ",
-      "type": "demotion",
-      "target": "Aaa",
-      "timestamp": "2026-04-11 11:07:57.991206",
-      "moderator": "1252174197816561705",
-      "additional_info": "",
-      "status": "Awaiting",
-      "old_rank": "Mastermind",
-      "new_rank": "Director"
-    }
-  ],
-  "moderators": [
-    {
-      "id": "1252174197816561705",
-      "total": 2,
-      "warnings": 0,
-      "bans": 0,
-      "demotions": 2,
-      "promotions": 0,
-      "exploits": 0
-    }
-  ],
-  "last_updated": "2026-04-12T04:12:20.329138"
+  "total_cases": 0,
+  "cases_by_type": {},
+  "cases": [],
+  "moderators": [],
+  "last_updated": "2026-04-12T06:02:18.597171"
 }
