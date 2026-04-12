@@ -11,7 +11,7 @@
       "timestamp": "2026-04-12 06:10:14.087279",
       "moderator": "1252174197816561705",
       "additional_info": "",
-      "status": "Awaiting",
+      "status": "APPROVED",
       "old_rank": "Supervisor",
       "new_rank": "Soldier"
     }
@@ -27,5 +27,5 @@
       "exploits": 0
     }
   ],
-  "last_updated": "2026-04-12T06:10:24.189166"
+  "last_updated": "2026-04-12T06:10:25.293004"
 }
