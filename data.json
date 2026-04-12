@@ -14,7 +14,7 @@
       "timestamp": "2026-04-12 11:47:15.608624",
       "moderator": "1252174197816561705",
       "additional_info": "nope",
-      "status": "Awaiting",
+      "status": "DENIED: No",
       "old_rank": "Supervisor",
       "new_rank": "Worker"
     },
@@ -62,5 +62,5 @@
       "exploits": 1
     }
   ],
-  "last_updated": "2026-04-12T12:15:49.986157"
+  "last_updated": "2026-04-12T12:15:54.973114"
 }
