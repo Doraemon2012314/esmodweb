@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SGFRP | Moderation Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>SGFRP | Mod Panel</title>
     <style>
         * {
             margin: 0;
@@ -12,78 +12,88 @@
         }
 
         body {
-            background: #0a0e12;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            padding: 24px;
-            color: #e1e4e8;
+            background: #0a0a1a;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            padding: 20px;
+            color: #e0e0e0;
         }
 
-        .container {
+        /* Main container */
+        .wrap {
             max-width: 1400px;
             margin: 0 auto;
         }
 
-        /* Header */
-        .header {
-            margin-bottom: 32px;
+        /* Header section */
+        .top {
+            margin-bottom: 28px;
+            border-left: 4px solid #7c3aed;
+            padding-left: 18px;
         }
 
-        .header h1 {
-            font-size: 28px;
+        .top h1 {
+            font-size: 26px;
             font-weight: 600;
             color: #fff;
             letter-spacing: -0.3px;
         }
 
-        .header p {
-            color: #8b949e;
+        .top p {
+            color: #8b8ba0;
             font-size: 14px;
             margin-top: 6px;
         }
 
-        .stats-row {
+        /* Stats row */
+        .stat-row {
             display: flex;
-            gap: 16px;
-            margin-bottom: 32px;
+            gap: 14px;
+            margin-bottom: 30px;
             flex-wrap: wrap;
         }
 
-        .stat-box {
-            background: #161b22;
-            border-radius: 12px;
-            padding: 20px 24px;
+        .stat-card {
+            background: #111127;
+            border-radius: 16px;
+            padding: 18px 22px;
             flex: 1;
-            min-width: 140px;
-            border: 1px solid #2d333b;
+            min-width: 130px;
+            border: 1px solid #1e1e3a;
+            transition: all 0.2s ease;
         }
 
-        .stat-number {
-            font-size: 32px;
+        .stat-card:hover {
+            border-color: #7c3aed;
+            background: #14142e;
+        }
+
+        .stat-num {
+            font-size: 34px;
             font-weight: 700;
-            color: #fff;
+            color: #a78bfa;
             line-height: 1.2;
         }
 
         .stat-label {
-            font-size: 13px;
-            color: #8b949e;
-            margin-top: 8px;
+            font-size: 12px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
+            color: #8b8ba0;
+            margin-top: 8px;
         }
 
-        /* Cards */
+        /* Main card style */
         .card {
-            background: #161b22;
-            border-radius: 12px;
-            border: 1px solid #2d333b;
-            margin-bottom: 24px;
+            background: #111127;
+            border-radius: 16px;
+            border: 1px solid #1e1e3a;
+            margin-bottom: 26px;
             overflow: hidden;
         }
 
-        .card-header {
-            padding: 18px 24px;
-            border-bottom: 1px solid #2d333b;
+        .card-head {
+            padding: 16px 22px;
+            border-bottom: 1px solid #1e1e3a;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -91,70 +101,70 @@
             gap: 12px;
         }
 
-        .card-header h2 {
+        .card-head h2 {
             font-size: 18px;
             font-weight: 600;
             color: #fff;
         }
 
-        /* Search */
-        .search-wrapper {
-            padding: 18px 24px;
-            border-bottom: 1px solid #2d333b;
+        /* Search box */
+        .search-area {
+            padding: 16px 22px;
+            border-bottom: 1px solid #1e1e3a;
         }
 
         .search-input {
             width: 100%;
             padding: 10px 14px;
-            background: #0d1117;
-            border: 1px solid #2d333b;
-            border-radius: 8px;
+            background: #0a0a18;
+            border: 1px solid #252545;
+            border-radius: 12px;
             color: #fff;
             font-size: 14px;
-            transition: border 0.2s;
+            transition: 0.2s;
         }
 
         .search-input:focus {
             outline: none;
-            border-color: #58a6ff;
+            border-color: #7c3aed;
         }
 
         .search-input::placeholder {
-            color: #6e7681;
+            color: #5a5a7a;
         }
 
         /* Filter buttons */
-        .filter-group {
-            padding: 12px 24px;
+        .filters {
+            padding: 12px 22px;
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
-            border-bottom: 1px solid #2d333b;
+            border-bottom: 1px solid #1e1e3a;
         }
 
         .filter-btn {
-            background: #21262d;
+            background: #1a1a33;
             border: none;
             padding: 6px 14px;
-            border-radius: 20px;
+            border-radius: 30px;
             font-size: 12px;
             font-weight: 500;
-            color: #c9d1d9;
+            color: #c4c4dd;
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .filter-btn:hover {
-            background: #30363d;
+            background: #2a2a4a;
         }
 
         .filter-btn.active {
-            background: #1f6feb;
+            background: #7c3aed;
             color: #fff;
         }
 
         /* Table */
-        .table-wrapper {
+        .table-wrap {
             overflow-x: auto;
         }
 
@@ -166,92 +176,93 @@
         th {
             text-align: left;
             padding: 14px 16px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
-            color: #8b949e;
-            background: #0d1117;
-            border-bottom: 1px solid #2d333b;
+            color: #a0a0c0;
+            background: #0d0d20;
+            border-bottom: 1px solid #1e1e3a;
         }
 
         td {
             padding: 14px 16px;
             font-size: 13px;
-            border-bottom: 1px solid #2d333b;
+            border-bottom: 1px solid #1a1a35;
             vertical-align: middle;
         }
 
         tr:hover td {
-            background: #1c2128;
+            background: #16162f;
         }
 
         /* Badges */
-        .badge {
+        .tag {
             display: inline-block;
             padding: 4px 10px;
-            border-radius: 20px;
+            border-radius: 30px;
             font-size: 11px;
             font-weight: 600;
         }
 
-        .badge-warning {
-            background: #d29922;
-            color: #1c2128;
-        }
-
-        .badge-ban {
-            background: #da3633;
+        .tag-warning {
+            background: #d97706;
             color: #fff;
         }
 
-        .badge-tempban {
-            background: #f0883e;
-            color: #1c2128;
-        }
-
-        .badge-demotion {
-            background: #6e40c9;
+        .tag-ban {
+            background: #dc2626;
             color: #fff;
         }
 
-        .badge-exploit {
-            background: #8250df;
+        .tag-tempban {
+            background: #ea580c;
             color: #fff;
         }
 
-        .status {
+        .tag-demotion {
+            background: #6d28d9;
+            color: #fff;
+        }
+
+        .tag-exploit {
+            background: #9333ea;
+            color: #fff;
+        }
+
+        .status-badge {
             display: inline-block;
             padding: 4px 10px;
-            border-radius: 20px;
+            border-radius: 30px;
             font-size: 11px;
             font-weight: 500;
         }
 
         .status-approved {
-            background: #2ea043;
+            background: #059669;
             color: #fff;
         }
 
         .status-denied {
-            background: #da3633;
+            background: #dc2626;
             color: #fff;
         }
 
         .status-pending {
-            background: #d29922;
-            color: #1c2128;
+            background: #d97706;
+            color: #fff;
         }
 
         code {
             font-family: 'SF Mono', 'Menlo', monospace;
             font-size: 12px;
-            background: #0d1117;
-            padding: 2px 6px;
-            border-radius: 6px;
-            color: #e1e4e8;
+            background: #0a0a18;
+            padding: 3px 8px;
+            border-radius: 8px;
+            color: #c084fc;
         }
 
-        .moderator-list {
-            padding: 16px 24px;
+        /* Moderator list */
+        .mod-list {
+            padding: 16px 22px;
         }
 
         .mod-item {
@@ -259,7 +270,9 @@
             justify-content: space-between;
             align-items: center;
             padding: 12px 0;
-            border-bottom: 1px solid #2d333b;
+            border-bottom: 1px solid #1e1e3a;
+            flex-wrap: wrap;
+            gap: 12px;
         }
 
         .mod-item:last-child {
@@ -267,19 +280,20 @@
         }
 
         .mod-name {
-            font-weight: 500;
             font-family: monospace;
             font-size: 13px;
+            font-weight: 500;
         }
 
         .mod-stats {
             display: flex;
-            gap: 16px;
+            gap: 18px;
             font-size: 13px;
+            flex-wrap: wrap;
         }
 
         .mod-stats span {
-            color: #8b949e;
+            color: #8b8ba0;
         }
 
         .mod-stats strong {
@@ -287,117 +301,138 @@
             margin-right: 4px;
         }
 
-        .refresh-info {
-            font-size: 12px;
-            color: #6e7681;
-            margin-top: 16px;
-            text-align: right;
-            border-top: 1px solid #2d333b;
-            padding-top: 16px;
-        }
-
+        /* Buttons */
         .btn-refresh {
-            background: #21262d;
-            border: 1px solid #2d333b;
+            background: #1a1a33;
+            border: 1px solid #2d2d55;
             padding: 6px 14px;
-            border-radius: 6px;
+            border-radius: 30px;
             font-size: 12px;
-            color: #c9d1d9;
+            color: #c4c4dd;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: 0.2s;
         }
 
         .btn-refresh:hover {
-            background: #30363d;
+            background: #2a2a4a;
+            border-color: #7c3aed;
         }
 
-        .empty-state {
+        .footer-note {
+            font-size: 12px;
+            color: #6a6a8a;
+            text-align: right;
+            padding-top: 16px;
+            margin-top: 8px;
+            border-top: 1px solid #1a1a35;
+        }
+
+        .empty-msg {
             text-align: center;
-            padding: 48px 24px;
-            color: #6e7681;
+            padding: 48px 20px;
+            color: #6a6a8a;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 12px;
+            }
+            .stat-num {
+                font-size: 26px;
+            }
+            .stat-card {
+                padding: 12px 16px;
+            }
+            th, td {
+                padding: 10px 12px;
+                font-size: 12px;
+            }
+            .mod-stats {
+                gap: 12px;
+            }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <!-- Header -->
-    <div class="header">
-        <h1>Moderation Panel</h1>
-        <p>Live case tracking for SGFRP</p>
+<div class="wrap">
+    <!-- header -->
+    <div class="top">
+        <h1>mod panel</h1>
+        <p>cases · warnings · bans · demotions</p>
     </div>
 
-    <!-- Stats Row -->
-    <div class="stats-row">
-        <div class="stat-box">
-            <div class="stat-number" id="totalCases">0</div>
-            <div class="stat-label">Total Cases</div>
+    <!-- stats row -->
+    <div class="stat-row">
+        <div class="stat-card">
+            <div class="stat-num" id="totalCases">0</div>
+            <div class="stat-label">total cases</div>
         </div>
-        <div class="stat-box">
-            <div class="stat-number" id="warnings">0</div>
-            <div class="stat-label">Warnings</div>
+        <div class="stat-card">
+            <div class="stat-num" id="warnings">0</div>
+            <div class="stat-label">warnings</div>
         </div>
-        <div class="stat-box">
-            <div class="stat-number" id="bans">0</div>
-            <div class="stat-label">Bans</div>
+        <div class="stat-card">
+            <div class="stat-num" id="bans">0</div>
+            <div class="stat-label">bans</div>
         </div>
-        <div class="stat-box">
-            <div class="stat-number" id="demotions">0</div>
-            <div class="stat-label">Demotions</div>
+        <div class="stat-card">
+            <div class="stat-num" id="demotions">0</div>
+            <div class="stat-label">demotions</div>
         </div>
-        <div class="stat-box">
-            <div class="stat-number" id="exploits">0</div>
-            <div class="stat-label">Exploits</div>
+        <div class="stat-card">
+            <div class="stat-num" id="exploits">0</div>
+            <div class="stat-label">exploits</div>
         </div>
     </div>
 
-    <!-- Cases Card -->
+    <!-- cases card -->
     <div class="card">
-        <div class="card-header">
-            <h2>Recent Cases</h2>
-            <button class="btn-refresh" onclick="fetchData()">⟳ Refresh</button>
+        <div class="card-head">
+            <h2>recent cases</h2>
+            <button class="btn-refresh" onclick="fetchData()">⟳ refresh</button>
         </div>
-        <div class="search-wrapper">
-            <input type="text" class="search-input" id="searchInput" placeholder="Search by case ID, target, or moderator..." onkeyup="searchCases()">
+        <div class="search-area">
+            <input type="text" class="search-input" id="searchInput" placeholder="search by case id, target, or moderator" onkeyup="searchCases()">
         </div>
-        <div class="filter-group">
-            <button class="filter-btn active" data-filter="all" onclick="filterCases('all')">All</button>
-            <button class="filter-btn" data-filter="warning" onclick="filterCases('warning')">Warnings</button>
-            <button class="filter-btn" data-filter="ban" onclick="filterCases('ban')">Bans</button>
-            <button class="filter-btn" data-filter="tempban" onclick="filterCases('tempban')">Temp Bans</button>
-            <button class="filter-btn" data-filter="demotion" onclick="filterCases('demotion')">Demotions</button>
-            <button class="filter-btn" data-filter="exploit" onclick="filterCases('exploit')">Exploits</button>
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all" onclick="filterCases('all')">all</button>
+            <button class="filter-btn" data-filter="warning" onclick="filterCases('warning')">warnings</button>
+            <button class="filter-btn" data-filter="ban" onclick="filterCases('ban')">bans</button>
+            <button class="filter-btn" data-filter="tempban" onclick="filterCases('tempban')">temp bans</button>
+            <button class="filter-btn" data-filter="demotion" onclick="filterCases('demotion')">demotions</button>
+            <button class="filter-btn" data-filter="exploit" onclick="filterCases('exploit')">exploits</button>
         </div>
-        <div class="table-wrapper">
+        <div class="table-wrap">
             <table>
                 <thead>
                     <tr>
-                        <th>Case ID</th>
-                        <th>Type</th>
-                        <th>Target</th>
-                        <th>Moderator</th>
-                        <th>Status</th>
-                        <th>Date</th>
+                        <th>case id</th>
+                        <th>type</th>
+                        <th>target</th>
+                        <th>moderator</th>
+                        <th>status</th>
+                        <th>date</th>
                     </tr>
                 </thead>
                 <tbody id="casesBody">
-                    <tr><td colspan="6" class="empty-state">Loading cases...</td></tr>
+                    <tr><td colspan="6" class="empty-msg">loading cases...</td></tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- Moderators Card -->
+    <!-- moderators card -->
     <div class="card">
-        <div class="card-header">
-            <h2>Top Moderators</h2>
+        <div class="card-head">
+            <h2>top moderators</h2>
         </div>
-        <div id="moderatorsList" class="moderator-list">
-            <div class="empty-state">Loading...</div>
+        <div id="moderatorsList" class="mod-list">
+            <div class="empty-msg">loading...</div>
         </div>
     </div>
 
-    <div class="refresh-info" id="lastUpdated">
-        Last updated: --
+    <div class="footer-note" id="lastUpdated">
+        last updated: --
     </div>
 </div>
 
@@ -405,15 +440,15 @@
     let allCases = [];
     let currentFilter = 'all';
 
-    function getBadgeClass(type) {
+    function getTagClass(type) {
         const map = {
-            'warning': 'badge-warning',
-            'ban': 'badge-ban',
-            'tempban': 'badge-tempban',
-            'demotion': 'badge-demotion',
-            'exploit': 'badge-exploit'
+            'warning': 'tag-warning',
+            'ban': 'tag-ban',
+            'tempban': 'tag-tempban',
+            'demotion': 'tag-demotion',
+            'exploit': 'tag-exploit'
         };
-        return map[type] || 'badge-warning';
+        return map[type] || 'tag-warning';
     }
 
     function getStatusClass(status) {
@@ -423,57 +458,17 @@
         return 'status-pending';
     }
 
-    function formatStatus(status) {
-        if (!status || status === 'Awaiting' || status === 'Awaiting Approval') return 'Pending';
-        if (status === 'APPROVED') return 'Approved';
-        if (status && status.startsWith('DENIED')) return 'Denied';
-        return status || 'Pending';
+    function formatStatusLabel(status) {
+        if (!status || status === 'Awaiting' || status === 'Awaiting Approval') return 'pending';
+        if (status === 'APPROVED') return 'approved';
+        if (status && status.startsWith('DENIED')) return 'denied';
+        return status || 'pending';
     }
 
-    function formatDate(dateStr) {
-        if (!dateStr) return 'N/A';
-        const date = new Date(dateStr);
-        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    }
-
-    function displayCases(cases) {
-        const tbody = document.getElementById('casesBody');
-        if (!cases || cases.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No cases found</td></tr>';
-            return;
-        }
-
-        tbody.innerHTML = cases.slice(0, 100).map(c => `
-            <tr>
-                <td><code>${escapeHtml(c.case_id || 'N/A')}</code></td>
-                <td><span class="badge ${getBadgeClass(c.type)}">${escapeHtml(c.type || 'Unknown')}</span></td>
-                <td>${escapeHtml(c.target || 'N/A')}</td>
-                <td><code>${escapeHtml(c.moderator || 'N/A')}</code></td>
-                <td><span class="status ${getStatusClass(c.status)}">${formatStatus(c.status)}</span></td>
-                <td>${formatDate(c.timestamp)}</td>
-            </tr>
-        `).join('');
-    }
-
-    function displayModerators(mods) {
-        const container = document.getElementById('moderatorsList');
-        if (!mods || mods.length === 0) {
-            container.innerHTML = '<div class="empty-state">No moderator data yet</div>';
-            return;
-        }
-
-        container.innerHTML = mods.slice(0, 10).map(mod => `
-            <div class="mod-item">
-                <div class="mod-name"><code>${escapeHtml(mod.id || 'Unknown')}</code></div>
-                <div class="mod-stats">
-                    <span><strong>${mod.total || 0}</strong> total</span>
-                    <span><strong>${mod.warnings || 0}</strong> warns</span>
-                    <span><strong>${mod.bans || 0}</strong> bans</span>
-                    <span><strong>${mod.demotions || 0}</strong> demos</span>
-                    <span><strong>${mod.exploits || 0}</strong> exploits</span>
-                </div>
-            </div>
-        `).join('');
+    function formatShortDate(dateStr) {
+        if (!dateStr) return '—';
+        const d = new Date(dateStr);
+        return `${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`;
     }
 
     function escapeHtml(str) {
@@ -486,15 +481,63 @@
         });
     }
 
+    function displayCases(cases) {
+        const tbody = document.getElementById('casesBody');
+        if (!cases || cases.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" class="empty-msg">no cases found</td></tr>';
+            return;
+        }
+
+        let html = '';
+        for (let i = 0; i < Math.min(cases.length, 100); i++) {
+            const c = cases[i];
+            html += `
+                <tr>
+                    <td><code>${escapeHtml(c.case_id || '?')}</code></td>
+                    <td><span class="tag ${getTagClass(c.type)}">${escapeHtml(c.type || 'unknown')}</span></td>
+                    <td>${escapeHtml(c.target || '?')}</td>
+                    <td><code>${escapeHtml(c.moderator || '?')}</code></td>
+                    <td><span class="status-badge ${getStatusClass(c.status)}">${formatStatusLabel(c.status)}</span></td>
+                    <td>${formatShortDate(c.timestamp)}</td>
+                </tr>
+            `;
+        }
+        tbody.innerHTML = html;
+    }
+
+    function displayModerators(mods) {
+        const container = document.getElementById('moderatorsList');
+        if (!mods || mods.length === 0) {
+            container.innerHTML = '<div class="empty-msg">no moderator data yet</div>';
+            return;
+        }
+
+        let html = '';
+        for (let i = 0; i < Math.min(mods.length, 10); i++) {
+            const m = mods[i];
+            html += `
+                <div class="mod-item">
+                    <div class="mod-name"><code>${escapeHtml(m.id || 'unknown')}</code></div>
+                    <div class="mod-stats">
+                        <span><strong>${m.total || 0}</strong> total</span>
+                        <span><strong>${m.warnings || 0}</strong> warns</span>
+                        <span><strong>${m.bans || 0}</strong> bans</span>
+                        <span><strong>${m.demotions || 0}</strong> demos</span>
+                        <span><strong>${m.exploits || 0}</strong> exploits</span>
+                    </div>
+                </div>
+            `;
+        }
+        container.innerHTML = html;
+    }
+
     async function fetchData() {
         try {
-            const response = await fetch('data.json?v=' + Date.now());
-            if (!response.ok) {
-                throw new Error('data.json not found');
-            }
-            const data = await response.json();
+            const res = await fetch('data.json?v=' + Date.now());
+            if (!res.ok) throw new Error('data.json not found');
+            const data = await res.json();
 
-            // Update stats
+            // update stats
             document.getElementById('totalCases').innerText = data.total_cases || 0;
             document.getElementById('warnings').innerText = data.cases_by_type?.warning || 0;
             document.getElementById('bans').innerText = (data.cases_by_type?.ban || 0) + (data.cases_by_type?.tempban || 0);
@@ -506,20 +549,19 @@
             displayModerators(data.moderators || []);
 
             if (data.last_updated) {
-                const date = new Date(data.last_updated);
-                document.getElementById('lastUpdated').innerHTML = `Last updated: ${date.toLocaleString()}`;
+                const d = new Date(data.last_updated);
+                document.getElementById('lastUpdated').innerHTML = `last updated: ${d.toLocaleString()}`;
             }
         } catch (err) {
-            console.error(err);
-            document.getElementById('casesBody').innerHTML = '<tr><td colspan="6" class="empty-state">Unable to load data. Make sure data.json exists.</td></tr>';
+            console.warn(err);
+            document.getElementById('casesBody').innerHTML = '<tr><td colspan="6" class="empty-msg">unable to load data — make sure data.json exists</td></tr>';
         }
     }
 
     function filterCases(type) {
         currentFilter = type;
-
-        // Update active button styling
-        document.querySelectorAll('.filter-btn').forEach(btn => {
+        const btns = document.querySelectorAll('.filter-btn');
+        btns.forEach(btn => {
             if (btn.getAttribute('data-filter') === type) {
                 btn.classList.add('active');
             } else {
@@ -536,13 +578,12 @@
     }
 
     function searchCases() {
-        const keyword = document.getElementById('searchInput').value.toLowerCase().trim();
+        const keyword = document.getElementById('searchInput').value.trim().toLowerCase();
         if (!keyword) {
             filterCases(currentFilter);
             return;
         }
-
-        const filtered = allCases.filter(c => 
+        const filtered = allCases.filter(c =>
             (c.case_id && c.case_id.toLowerCase().includes(keyword)) ||
             (c.target && c.target.toLowerCase().includes(keyword)) ||
             (c.moderator && c.moderator.toLowerCase().includes(keyword))
@@ -550,10 +591,8 @@
         displayCases(filtered);
     }
 
-    // Initial load
+    // initial load + auto refresh every 15 seconds
     fetchData();
-
-    // Auto refresh every 15 seconds
     setInterval(fetchData, 15000);
 </script>
 </body>
