@@ -1,7 +1,30 @@
 {
-  "total_cases": 0,
-  "cases_by_type": {},
-  "cases": [],
-  "moderators": [],
-  "last_updated": "2026-04-12T06:41:46.214664"
+  "total_cases": 1,
+  "cases_by_type": {
+    "exploit": 1
+  },
+  "cases": [
+    {
+      "case_id": "H0FSW5PN",
+      "type": "exploit",
+      "target": "Test",
+      "timestamp": "2026-04-12 06:41:50.422861",
+      "moderator": "1252174197816561705",
+      "additional_info": "Test",
+      "status": "Awaiting",
+      "old_rank": "",
+      "new_rank": ""
+    }
+  ],
+  "moderators": [
+    {
+      "id": "1252174197816561705",
+      "total": 1,
+      "warnings": 0,
+      "bans": 0,
+      "demotions": 0,
+      "exploits": 1
+    }
+  ],
+  "last_updated": "2026-04-12T06:41:50.430711"
 }
