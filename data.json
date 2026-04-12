@@ -1,12 +1,23 @@
 {
-  "total_cases": 5,
+  "total_cases": 6,
   "cases_by_type": {
     "ban": 2,
-    "demotion": 1,
+    "demotion": 2,
     "exploit": 1,
     "warning": 1
   },
   "cases": [
+    {
+      "case_id": "T9RL4DR7",
+      "type": "demotion",
+      "target": "A",
+      "timestamp": "2026-04-12 11:47:15.608624",
+      "moderator": "1252174197816561705",
+      "additional_info": "nope",
+      "status": "Awaiting",
+      "old_rank": "Supervisor",
+      "new_rank": "Worker"
+    },
     {
       "case_id": "KDX8L7XP",
       "type": "demotion",
@@ -66,12 +77,12 @@
   "moderators": [
     {
       "id": "1252174197816561705",
-      "total": 5,
+      "total": 6,
       "warnings": 1,
       "bans": 2,
-      "demotions": 1,
+      "demotions": 2,
       "exploits": 1
     }
   ],
-  "last_updated": "2026-04-12T11:47:11.565976"
+  "last_updated": "2026-04-12T11:47:15.613118"
 }
