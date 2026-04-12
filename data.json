@@ -1,7 +1,31 @@
 {
-  "total_cases": 0,
-  "cases_by_type": {},
-  "cases": [],
-  "moderators": [],
-  "last_updated": "2026-04-12T06:10:12.618866"
+  "total_cases": 1,
+  "cases_by_type": {
+    "demotion": 1
+  },
+  "cases": [
+    {
+      "case_id": "YIL9TGP3",
+      "type": "demotion",
+      "target": "Test",
+      "timestamp": "2026-04-12 06:10:14.087279",
+      "moderator": "1252174197816561705",
+      "additional_info": "",
+      "status": "Awaiting",
+      "old_rank": "Supervisor",
+      "new_rank": "Soldier"
+    }
+  ],
+  "moderators": [
+    {
+      "id": "1252174197816561705",
+      "total": 1,
+      "warnings": 0,
+      "bans": 0,
+      "demotions": 1,
+      "promotions": 0,
+      "exploits": 0
+    }
+  ],
+  "last_updated": "2026-04-12T06:10:14.097551"
 }
