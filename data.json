@@ -1,12 +1,23 @@
 {
-  "total_cases": 4,
+  "total_cases": 5,
   "cases_by_type": {
-    "ban": 1,
+    "ban": 2,
     "demotion": 1,
     "exploit": 1,
     "warning": 1
   },
   "cases": [
+    {
+      "case_id": "6H4789W1",
+      "type": "ban",
+      "target": "<@1277239780425465929>",
+      "timestamp": "2026-04-12 12:15:57.312584",
+      "moderator": "1277239780425465929",
+      "additional_info": "Test",
+      "status": "Awaiting",
+      "old_rank": "",
+      "new_rank": ""
+    },
     {
       "case_id": "T9RL4DR7",
       "type": "demotion",
@@ -60,7 +71,15 @@
       "bans": 1,
       "demotions": 1,
       "exploits": 1
+    },
+    {
+      "id": "1277239780425465929",
+      "total": 1,
+      "warnings": 0,
+      "bans": 1,
+      "demotions": 0,
+      "exploits": 0
     }
   ],
-  "last_updated": "2026-04-12T12:15:55.951883"
+  "last_updated": "2026-04-12T12:15:57.335039"
 }
