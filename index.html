@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>SGFRP | Mod Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>mod panel • cohesive moderation suite</title>
     <style>
         * {
             margin: 0;
@@ -12,164 +12,196 @@
         }
 
         body {
-            background: #0a0a1a;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
-            padding: 20px;
-            color: #e0e0e0;
+            background: #000000;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', monospace;
+            padding: 28px 24px;
+            color: #eef2ff;
+            font-weight: 400;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
+        /* smoother global transitions */
         .wrap {
-            max-width: 1400px;
+            max-width: 1440px;
             margin: 0 auto;
+            animation: fadeSlideUp 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
-        /* Header */
+        @keyframes fadeSlideUp {
+            0% { opacity: 0; transform: translateY(12px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* refined header */
         .top {
-            margin-bottom: 28px;
-            border-left: 4px solid #7c3aed;
-            padding-left: 18px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            flex-wrap: wrap;
-            gap: 15px;
+            margin-bottom: 36px;
+            border-left: 3px solid #ffffff;
+            padding-left: 24px;
+            transition: border-color 0.2s;
         }
 
         .top h1 {
-            font-size: 26px;
-            font-weight: 600;
-            color: #fff;
+            font-size: 30px;
+            font-weight: 500;
+            color: #ffffff;
             letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #ffffff, #c0c0c0);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
         }
 
         .top p {
-            color: #8b8ba0;
-            font-size: 14px;
-            margin-top: 6px;
+            color: #8b8b9e;
+            font-size: 13px;
+            margin-top: 8px;
+            font-family: 'SF Mono', monospace;
+            letter-spacing: 0.2px;
         }
 
-        /* Stats row */
+        /* stat cards - soft border + hover */
         .stat-row {
             display: flex;
-            gap: 14px;
-            margin-bottom: 30px;
+            gap: 18px;
+            margin-bottom: 36px;
             flex-wrap: wrap;
         }
 
         .stat-card {
-            background: #111127;
-            border-radius: 16px;
-            padding: 18px 22px;
+            background: #0a0a0c;
+            border: 1px solid #26262c;
+            padding: 22px 24px;
             flex: 1;
             min-width: 130px;
-            border: 1px solid #1e1e3a;
-            transition: all 0.2s ease;
-        }
-
-        .stat-card:hover {
-            border-color: #7c3aed;
-            background: #14142e;
-        }
-
-        .stat-num {
-            font-size: 34px;
-            font-weight: 700;
-            color: #a78bfa;
-            line-height: 1.2;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: #8b8ba0;
-            margin-top: 8px;
-        }
-
-        /* Card style */
-        .card {
-            background: #111127;
-            border-radius: 16px;
-            border: 1px solid #1e1e3a;
-            margin-bottom: 26px;
+            transition: all 0.25s ease;
+            border-radius: 0px;
+            position: relative;
             overflow: hidden;
         }
 
+        .stat-card:hover {
+            border-color: #3f3f48;
+            background: #0e0e12;
+            transform: translateY(-2px);
+        }
+
+        .stat-num {
+            font-size: 40px;
+            font-weight: 500;
+            color: #ffffff;
+            font-family: 'SF Mono', monospace;
+            letter-spacing: -0.5px;
+            transition: transform 0.2s;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #6b6b7e;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-weight: 500;
+        }
+
+        /* card styling */
+        .card {
+            background: #08080c;
+            border: 1px solid #222228;
+            margin-bottom: 28px;
+            transition: box-shadow 0.2s, border-color 0.2s;
+        }
+
+        .card:hover {
+            border-color: #2c2c34;
+        }
+
         .card-head {
-            padding: 16px 22px;
-            border-bottom: 1px solid #1e1e3a;
+            padding: 18px 24px;
+            border-bottom: 1px solid #222228;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 14px;
         }
 
         .card-head h2 {
-            font-size: 18px;
-            font-weight: 600;
-            color: #fff;
+            font-size: 16px;
+            font-weight: 480;
+            color: #f0f0fc;
+            font-family: 'SF Mono', monospace;
+            letter-spacing: -0.2px;
+            background: rgba(255,255,240,0.03);
+            padding-left: 0;
         }
 
-        /* Search */
+        /* smooth search */
         .search-area {
-            padding: 16px 22px;
-            border-bottom: 1px solid #1e1e3a;
+            padding: 18px 24px;
+            border-bottom: 1px solid #222228;
         }
 
         .search-input {
             width: 100%;
-            padding: 10px 14px;
-            background: #0a0a18;
-            border: 1px solid #252545;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 14px;
-            transition: 0.2s;
+            padding: 12px 16px;
+            background: #010101;
+            border: 1px solid #2c2c34;
+            color: #eef2ff;
+            font-size: 13px;
+            font-family: 'SF Mono', monospace;
+            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
         .search-input:focus {
             outline: none;
-            border-color: #7c3aed;
+            border-color: #ffffff;
+            background: #0a0a0e;
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.1);
         }
 
-        .search-input::placeholder {
-            color: #5a5a7a;
-        }
-
-        /* Filters */
+        /* filters with micro-interaction */
         .filters {
-            padding: 12px 22px;
+            padding: 14px 24px;
             display: flex;
-            gap: 8px;
+            gap: 10px;
             flex-wrap: wrap;
-            border-bottom: 1px solid #1e1e3a;
+            border-bottom: 1px solid #222228;
         }
 
         .filter-btn {
-            background: #1a1a33;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 12px;
-            font-weight: 500;
-            color: #c4c4dd;
+            background: #0f0f14;
+            border: 1px solid #2b2b33;
+            padding: 7px 16px;
+            font-size: 11px;
+            font-family: monospace;
+            color: #bbbbcc;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.18s ease;
+            letter-spacing: 0.3px;
         }
 
         .filter-btn:hover {
-            background: #2a2a4a;
+            background: #191921;
+            border-color: #4a4a5a;
+            color: #f0f0ff;
+            transform: scale(0.97);
         }
 
         .filter-btn.active {
-            background: #7c3aed;
-            color: #fff;
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+            font-weight: 500;
+            box-shadow: 0 2px 6px rgba(255,255,255,0.1);
         }
 
-        /* Table */
+        /* table enhancements */
         .table-wrap {
             overflow-x: auto;
+            scroll-behavior: smooth;
         }
 
         table {
@@ -179,184 +211,173 @@
 
         th {
             text-align: left;
-            padding: 14px 16px;
-            font-size: 12px;
-            font-weight: 600;
-            color: #a0a0c0;
-            background: #0d0d20;
-            border-bottom: 1px solid #1e1e3a;
+            padding: 14px 18px;
+            font-size: 11px;
+            font-weight: 500;
+            color: #9e9eb0;
+            background: #050507;
+            border-bottom: 1px solid #26262c;
+            font-family: monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         td {
-            padding: 14px 16px;
-            font-size: 13px;
-            border-bottom: 1px solid #1a1a35;
-            vertical-align: middle;
+            padding: 14px 18px;
+            font-size: 12px;
+            border-bottom: 1px solid #16161c;
+            font-family: 'SF Mono', monospace;
+            transition: background 0.12s;
+        }
+
+        tr {
+            transition: background 0.12s;
         }
 
         tr:hover td {
-            background: #16162f;
+            background: #111116;
         }
 
-        /* Badges */
+        /* badges refined */
         .tag {
             display: inline-block;
-            padding: 4px 10px;
-            border-radius: 30px;
-            font-size: 11px;
-            font-weight: 600;
+            padding: 4px 12px;
+            font-size: 10px;
+            font-family: monospace;
+            font-weight: 500;
+            border-radius: 0px;
+            letter-spacing: 0.3px;
+            transition: opacity 0.1s;
         }
 
-        .tag-warning {
-            background: #d97706;
-            color: #fff;
-        }
+        .tag-warning { background: #2a2418; color: #ffdd99; border-left: 2px solid #ffb347; }
+        .tag-ban { background: #2a1a1a; color: #ffacac; border-left: 2px solid #ff5e5e; }
+        .tag-tempban { background: #26221c; color: #ffcc88; border-left: 2px solid #e6b422; }
+        .tag-demotion { background: #1e1e2a; color: #bbbbff; border-left: 2px solid #7c7cff; }
+        .tag-exploit { background: #1e222a; color: #88ccff; border-left: 2px solid #3a86ff; }
 
-        .tag-ban {
-            background: #dc2626;
-            color: #fff;
-        }
-
-        .tag-tempban {
-            background: #ea580c;
-            color: #fff;
-        }
-
-        .tag-demotion {
-            background: #6d28d9;
-            color: #fff;
-        }
-
-        .tag-exploit {
-            background: #9333ea;
-            color: #fff;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 30px;
-            font-size: 11px;
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 12px;
+            font-size: 10px;
+            font-family: monospace;
             font-weight: 500;
         }
-
-        .status-approved {
-            background: #059669;
-            color: #fff;
+        .status::before {
+            content: "●";
+            font-size: 8px;
+            margin-right: 4px;
         }
-
-        .status-denied {
-            background: #dc2626;
-            color: #fff;
-        }
-
-        .status-pending {
-            background: #d97706;
-            color: #fff;
-        }
+        .status-approved { background: #102a1c; color: #a0f0b0; }
+        .status-denied { background: #2a1515; color: #ffa0a0; }
+        .status-pending { background: #2a2818; color: #ffe6a3; }
 
         code {
-            font-family: 'SF Mono', 'Menlo', monospace;
-            font-size: 12px;
-            background: #0a0a18;
+            font-family: 'SF Mono', monospace;
+            font-size: 11px;
+            background: #111116;
             padding: 3px 8px;
-            border-radius: 8px;
-            color: #c084fc;
+            border-radius: 4px;
+            color: #e2e2ff;
         }
 
-        /* Delete button */
+        /* delete button smooth */
         .delete-btn {
             background: none;
-            border: none;
-            color: #dc2626;
+            border: 1px solid #4a2a2a;
+            color: #ff8a8a;
             cursor: pointer;
-            font-size: 16px;
-            padding: 4px 8px;
-            border-radius: 6px;
-            transition: all 0.2s;
-            opacity: 0.6;
+            padding: 5px 12px;
+            font-size: 11px;
+            font-family: monospace;
+            transition: all 0.2s ease;
+            border-radius: 2px;
         }
 
         .delete-btn:hover {
-            opacity: 1;
-            background: #1a1a33;
-            transform: scale(1.05);
+            background: #2a1818;
+            border-color: #ff8a8a;
+            transform: scale(0.96);
+            color: #ffc0c0;
         }
 
-        /* Moderator list */
+        /* moderator list - modern entries */
         .mod-list {
-            padding: 16px 22px;
+            padding: 8px 20px 16px 20px;
         }
 
         .mod-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #1e1e3a;
+            padding: 14px 8px;
+            border-bottom: 1px solid #1a1a22;
             flex-wrap: wrap;
             gap: 12px;
+            transition: background 0.12s;
         }
-
-        .mod-item:last-child {
-            border-bottom: none;
-        }
-
-        .mod-name {
-            font-family: monospace;
-            font-size: 13px;
-            font-weight: 500;
+        .mod-item:hover {
+            background: #0c0c10;
         }
 
         .mod-stats {
             display: flex;
             gap: 18px;
-            font-size: 13px;
-            flex-wrap: wrap;
+            font-size: 11px;
+            font-family: monospace;
         }
 
         .mod-stats span {
-            color: #8b8ba0;
+            color: #8e8ea8;
+            transition: color 0.1s;
         }
 
         .mod-stats strong {
-            color: #fff;
-            margin-right: 4px;
+            color: #f0f0ff;
+            margin-right: 5px;
+            font-weight: 500;
         }
 
-        /* Buttons */
         .btn-refresh {
-            background: #1a1a33;
-            border: 1px solid #2d2d55;
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 12px;
-            color: #c4c4dd;
+            background: #121216;
+            border: 1px solid #2e2e38;
+            padding: 6px 16px;
+            font-size: 11px;
+            font-family: monospace;
+            color: #d0d0e0;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.2s;
         }
 
         .btn-refresh:hover {
-            background: #2a2a4a;
-            border-color: #7c3aed;
+            background: #1c1c24;
+            border-color: #fff;
+            color: white;
+            transform: translateY(-1px);
         }
 
         .footer-note {
-            font-size: 12px;
-            color: #6a6a8a;
+            font-size: 10px;
+            color: #505065;
             text-align: right;
-            padding-top: 16px;
-            margin-top: 8px;
-            border-top: 1px solid #1a1a35;
+            padding-top: 20px;
+            margin-top: 10px;
+            border-top: 1px solid #1c1c22;
+            font-family: monospace;
+            transition: color 0.2s;
         }
 
         .empty-msg {
             text-align: center;
             padding: 48px 20px;
-            color: #6a6a8a;
+            color: #5e5e78;
+            font-family: monospace;
+            font-style: italic;
         }
 
-        /* Modal styles */
+        /* modal smoother */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -364,125 +385,136 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.92);
+            backdrop-filter: blur(3px);
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            transition: opacity 0.2s;
         }
 
         .modal {
-            background: #111127;
-            border-radius: 20px;
-            padding: 24px;
-            max-width: 400px;
+            background: #0c0c12;
+            border: 1px solid #33333e;
+            padding: 28px;
+            max-width: 420px;
             width: 90%;
-            border: 1px solid #2d2d55;
+            animation: modalPop 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+        }
+
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .modal h3 {
-            color: #fff;
-            margin-bottom: 12px;
+            color: #ffffff;
+            margin-bottom: 14px;
+            font-family: monospace;
+            font-weight: 450;
+            font-size: 18px;
         }
 
         .modal p {
-            color: #a0a0c0;
-            margin-bottom: 20px;
-            font-size: 14px;
+            color: #b0b0c0;
+            margin-bottom: 24px;
+            font-size: 13px;
+            font-family: monospace;
         }
 
         .modal-buttons {
             display: flex;
-            gap: 12px;
+            gap: 14px;
             justify-content: flex-end;
         }
 
         .modal-btn {
-            padding: 8px 16px;
-            border-radius: 8px;
-            border: none;
+            padding: 9px 18px;
+            border: 1px solid #2c2c38;
+            background: #12121a;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 12px;
+            font-family: monospace;
+            color: #ddddff;
+            transition: all 0.2s;
         }
 
-        .modal-btn-cancel {
-            background: #1a1a33;
-            color: #c4c4dd;
+        .modal-btn:hover {
+            background: #1f1f2a;
+            border-color: #5a5a70;
         }
 
         .modal-btn-confirm {
-            background: #dc2626;
-            color: #fff;
+            border-color: #772222;
+            color: #ffabab;
+        }
+        .modal-btn-confirm:hover {
+            background: #2f1a1a;
+            border-color: #ff7777;
+        }
+
+        .deleted-section {
+            margin-top: 0;
+        }
+
+        .deleted-item {
+            font-size: 11px;
+            color: #81819b;
+            padding: 8px 0;
+            font-family: monospace;
+            border-bottom: 1px solid #15151c;
+            transition: background 0.1s;
+        }
+        .deleted-item code {
+            background: #111;
+            color: #ffb7b7;
         }
 
         @media (max-width: 700px) {
-            body {
-                padding: 12px;
-            }
-            .stat-num {
-                font-size: 26px;
-            }
-            .stat-card {
-                padding: 12px 16px;
-            }
-            th, td {
-                padding: 10px 12px;
-                font-size: 12px;
-            }
-            .mod-stats {
-                gap: 12px;
-            }
-            .delete-btn {
-                font-size: 14px;
-            }
+            body { padding: 16px; }
+            .stat-num { font-size: 30px; }
+            th, td { padding: 10px 12px; font-size: 10px; }
+            .filter-btn { padding: 5px 12px; }
+        }
+
+        /* custom scroll smoothness */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2c2c36;
+            border-radius: 6px;
         }
     </style>
 </head>
 <body>
 <div class="wrap">
-    <!-- header -->
     <div class="top">
-        <div>
-            <h1>mod panel</h1>
-            <p>cases · warnings · bans · demotions</p>
-        </div>
-        <div>
-            <button class="btn-refresh" onclick="fetchData()">⟳ refresh</button>
-        </div>
+        <h1>mod panel</h1>
+        <p>cases · sanctions · moderator audit</p>
     </div>
 
-    <!-- stats row -->
     <div class="stat-row">
-        <div class="stat-card">
-            <div class="stat-num" id="totalCases">0</div>
-            <div class="stat-label">total cases</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-num" id="warnings">0</div>
-            <div class="stat-label">warnings</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-num" id="bans">0</div>
-            <div class="stat-label">bans</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-num" id="demotions">0</div>
-            <div class="stat-label">demotions</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-num" id="exploits">0</div>
-            <div class="stat-label">exploits</div>
-        </div>
+        <div class="stat-card"><div class="stat-num" id="totalCases">0</div><div class="stat-label">total cases</div></div>
+        <div class="stat-card"><div class="stat-num" id="warnings">0</div><div class="stat-label">warnings</div></div>
+        <div class="stat-card"><div class="stat-num" id="bans">0</div><div class="stat-label">bans</div></div>
+        <div class="stat-card"><div class="stat-num" id="demotions">0</div><div class="stat-label">demotions</div></div>
+        <div class="stat-card"><div class="stat-num" id="exploits">0</div><div class="stat-label">exploits</div></div>
     </div>
 
-    <!-- cases card -->
     <div class="card">
         <div class="card-head">
             <h2>recent cases</h2>
+            <button class="btn-refresh" onclick="fetchData()">⟳ refresh</button>
         </div>
         <div class="search-area">
-            <input type="text" class="search-input" id="searchInput" placeholder="search by case id, target, or moderator" onkeyup="searchCases()">
+            <input type="text" class="search-input" id="searchInput" placeholder="search by case id, target, or moderator" onkeyup="debouncedSearch()">
         </div>
-        <div class="filters">
+        <div class="filters" id="filterContainer">
             <button class="filter-btn active" data-filter="all" onclick="filterCases('all')">all</button>
             <button class="filter-btn" data-filter="warning" onclick="filterCases('warning')">warnings</button>
             <button class="filter-btn" data-filter="ban" onclick="filterCases('ban')">bans</button>
@@ -493,87 +525,68 @@
         <div class="table-wrap">
             <table>
                 <thead>
-                    <tr>
-                        <th>case id</th>
-                        <th>type</th>
-                        <th>target</th>
-                        <th>moderator</th>
-                        <th>status</th>
-                        <th>date</th>
-                        <th style="width: 50px;"></th>
-                    </tr>
+                    <tr><th>case id</th><th>type</th><th>target</th><th>moderator</th><th>status</th><th>date</th><th></th></tr>
                 </thead>
-                <tbody id="casesBody">
-                    <tr><td colspan="7" class="empty-msg">loading cases...</td></tr>
-                </tbody>
+                <tbody id="casesBody"><tr><td colspan="7" class="empty-msg">⟳ fetching data...</td></tr></tbody>
             </table>
         </div>
     </div>
 
-    <!-- moderators card -->
     <div class="card">
-        <div class="card-head">
-            <h2>top moderators</h2>
-        </div>
-        <div id="moderatorsList" class="mod-list">
-            <div class="empty-msg">loading...</div>
-        </div>
+        <div class="card-head"><h2>top moderators</h2></div>
+        <div id="moderatorsList" class="mod-list"><div class="empty-msg">loading moderators...</div></div>
     </div>
 
-    <div class="footer-note" id="lastUpdated">
-        last updated: --
+    <div class="card">
+        <div class="card-head"><h2>recent deletions</h2></div>
+        <div id="deletedList" class="mod-list"><div class="empty-msg">no recent deletions</div></div>
     </div>
+
+    <div class="footer-note" id="lastUpdated">last updated: —</div>
 </div>
 
-<!-- Delete confirmation modal -->
 <div id="deleteModal" class="modal-overlay">
     <div class="modal">
-        <h3>delete case</h3>
-        <p>are you sure you want to delete case <code id="deleteCaseId"></code>? this action cannot be undone.</p>
+        <h3>⛔ delete case</h3>
+        <p>are you sure you want to delete case <code id="deleteCaseId"></code>?<br>this action requires discord confirmation.</p>
         <div class="modal-buttons">
-            <button class="modal-btn modal-btn-cancel" onclick="closeDeleteModal()">cancel</button>
+            <button class="modal-btn" onclick="closeDeleteModal()">cancel</button>
             <button class="modal-btn modal-btn-confirm" onclick="confirmDelete()">delete</button>
         </div>
     </div>
 </div>
 
 <script>
+    // ========== ENHANCED SMOOTHNESS ==========
     let allCases = [];
     let currentFilter = 'all';
     let pendingDelete = null;
-    let adminMode = true; // Set to false to hide delete buttons for non-admins
+    let deletedCases = [];
+    let searchDebounceTimer = null;
 
+    // helper: formatting
     function getTagClass(type) {
-        const map = {
-            'warning': 'tag-warning',
-            'ban': 'tag-ban',
-            'tempban': 'tag-tempban',
-            'demotion': 'tag-demotion',
-            'exploit': 'tag-exploit'
-        };
+        const map = {'warning':'tag-warning','ban':'tag-ban','tempban':'tag-tempban','demotion':'tag-demotion','exploit':'tag-exploit'};
         return map[type] || 'tag-warning';
     }
-
     function getStatusClass(status) {
-        if (!status || status === 'Awaiting' || status === 'Awaiting Approval') return 'status-pending';
-        if (status === 'APPROVED') return 'status-approved';
-        if (status && status.startsWith('DENIED')) return 'status-denied';
+        if (!status || status === 'awaiting' || status === 'Awaiting') return 'status-pending';
+        if (status === 'approved' || status === 'APPROVED') return 'status-approved';
+        if (status && (status.startsWith('denied') || status.startsWith('DENIED'))) return 'status-denied';
         return 'status-pending';
     }
-
-    function formatStatusLabel(status) {
-        if (!status || status === 'Awaiting' || status === 'Awaiting Approval') return 'pending';
-        if (status === 'APPROVED') return 'approved';
-        if (status && status.startsWith('DENIED')) return 'denied';
+    function formatStatus(status) {
+        if (!status || status === 'awaiting' || status === 'Awaiting') return 'pending';
+        if (status === 'approved' || status === 'APPROVED') return 'approved';
+        if (status && (status.startsWith('denied') || status.startsWith('DENIED'))) return 'denied';
         return status || 'pending';
     }
-
-    function formatShortDate(dateStr) {
-        if (!dateStr) return '—';
+    function formatDate(dateStr) {
+        if (!dateStr) return '-';
         const d = new Date(dateStr);
+        if (isNaN(d.getTime())) return dateStr;
         return `${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`;
     }
-
     function escapeHtml(str) {
         if (!str) return '';
         return str.replace(/[&<>]/g, function(m) {
@@ -584,111 +597,25 @@
         });
     }
 
-    function showDeleteModal(caseId) {
-        pendingDelete = caseId;
-        document.getElementById('deleteCaseId').innerText = caseId;
-        document.getElementById('deleteModal').style.display = 'flex';
-    }
-
-    function closeDeleteModal() {
-        document.getElementById('deleteModal').style.display = 'none';
-        pendingDelete = null;
-    }
-
-    async function confirmDelete() {
-        if (!pendingDelete) return;
-        
-        try {
-            // Send delete request to GitHub API (we'll use localStorage as temp storage)
-            // Since we can't directly modify the JSON file from browser, we'll use localStorage
-            // and show instructions for manual deletion
-            
-            let cases = JSON.parse(localStorage.getItem('sgfrp_cases') || '[]');
-            if (cases.length === 0) {
-                cases = allCases;
-            }
-            
-            const updatedCases = cases.filter(c => c.case_id !== pendingDelete);
-            
-            if (updatedCases.length === cases.length) {
-                alert('case not found');
-                closeDeleteModal();
-                return;
-            }
-            
-            localStorage.setItem('sgfrp_cases', JSON.stringify(updatedCases));
-            
-            // Update the displayed data
-            allCases = updatedCases;
-            displayCases(allCases);
-            
-            // Update stats
-            updateStatsFromCases(updatedCases);
-            
-            alert(`Case ${pendingDelete} deleted locally. To permanently delete from the bot, run /deletecase ${pendingDelete} in Discord.`);
-            
-            closeDeleteModal();
-            
-        } catch (err) {
-            console.error('Delete error:', err);
-            alert('Error deleting case. Make sure you have admin permissions.');
-            closeDeleteModal();
-        }
-    }
-
-    function updateStatsFromCases(cases) {
-        const total = cases.length;
-        const warnings = cases.filter(c => c.type === 'warning').length;
-        const bans = cases.filter(c => c.type === 'ban' || c.type === 'tempban').length;
-        const demotions = cases.filter(c => c.type === 'demotion').length;
-        const exploits = cases.filter(c => c.type === 'exploit').length;
-        
-        document.getElementById('totalCases').innerText = total;
-        document.getElementById('warnings').innerText = warnings;
-        document.getElementById('bans').innerText = bans;
-        document.getElementById('demotions').innerText = demotions;
-        document.getElementById('exploits').innerText = exploits;
-        
-        // Update moderator stats
-        const modStats = {};
-        cases.forEach(c => {
-            if (!modStats[c.moderator]) {
-                modStats[c.moderator] = { total: 0, warnings: 0, bans: 0, demotions: 0, exploits: 0 };
-            }
-            modStats[c.moderator].total++;
-            if (c.type === 'warning') modStats[c.moderator].warnings++;
-            else if (c.type === 'ban' || c.type === 'tempban') modStats[c.moderator].bans++;
-            else if (c.type === 'demotion') modStats[c.moderator].demotions++;
-            else if (c.type === 'exploit') modStats[c.moderator].exploits++;
-        });
-        
-        const sortedMods = Object.entries(modStats).map(([id, stats]) => ({ id, ...stats }))
-            .sort((a, b) => b.total - a.total);
-        
-        displayModerators(sortedMods);
-    }
-
+    // display functions with micro animations (via class reflow)
     function displayCases(cases) {
         const tbody = document.getElementById('casesBody');
         if (!cases || cases.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="7" class="empty-msg">no cases found</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" class="empty-msg">✖ no cases found</td></tr>';
             return;
         }
-
         let html = '';
-        for (let i = 0; i < Math.min(cases.length, 100); i++) {
+        for (let i = 0; i < Math.min(cases.length, 120); i++) {
             const c = cases[i];
-            html += `
-                <tr>
-                    <td><code>${escapeHtml(c.case_id || '?')}</code></td>
-                    <td><span class="tag ${getTagClass(c.type)}">${escapeHtml(c.type || 'unknown')}</span></td>
-                    <td>${escapeHtml(c.target || '?')}</td>
-                    <td><code>${escapeHtml(c.moderator || '?')}</code></td>
-                    <td><span class="status-badge ${getStatusClass(c.status)}">${formatStatusLabel(c.status)}</span></td>
-                    <td>${formatShortDate(c.timestamp)}</td>
-                    <td><button class="delete-btn" onclick="showDeleteModal('${escapeHtml(c.case_id)}')" title="delete case">🗑️</button></td>
-                </tr>
-            `;
+            html += `<tr style="transition: background 0.1s;">
+                <td><code>${escapeHtml(c.case_id || '?')}</code></td>
+                <td><span class="tag ${getTagClass(c.type)}">${escapeHtml(c.type || 'unknown')}</span></td>
+                <td>${escapeHtml(c.target || '?')}</td>
+                <td><code>${escapeHtml(c.moderator || '?')}</code></td>
+                <td><span class="status ${getStatusClass(c.status)}">${formatStatus(c.status)}</span></td>
+                <td>${formatDate(c.timestamp)}</td>
+                <td><button class="delete-btn" onclick="showDeleteModal('${escapeHtml(c.case_id)}')">del</button></td>
+            </tr>`;
         }
         tbody.innerHTML = html;
     }
@@ -696,91 +623,107 @@
     function displayModerators(mods) {
         const container = document.getElementById('moderatorsList');
         if (!mods || mods.length === 0) {
-            container.innerHTML = '<div class="empty-msg">no moderator data yet</div>';
+            container.innerHTML = '<div class="empty-msg">no moderator data</div>';
             return;
         }
-
         let html = '';
-        for (let i = 0; i < Math.min(mods.length, 10); i++) {
+        for (let i = 0; i < Math.min(mods.length, 12); i++) {
             const m = mods[i];
-            html += `
-                <div class="mod-item">
-                    <div class="mod-name"><code>${escapeHtml(m.id || 'unknown')}</code></div>
-                    <div class="mod-stats">
-                        <span><strong>${m.total || 0}</strong> total</span>
-                        <span><strong>${m.warnings || 0}</strong> warns</span>
-                        <span><strong>${m.bans || 0}</strong> bans</span>
-                        <span><strong>${m.demotions || 0}</strong> demos</span>
-                        <span><strong>${m.exploits || 0}</strong> exploits</span>
-                    </div>
+            html += `<div class="mod-item">
+                <div class="mod-name"><code>${escapeHtml(m.id || 'unknown')}</code></div>
+                <div class="mod-stats">
+                    <span><strong>${m.total || 0}</strong> total</span>
+                    <span><strong>${m.warnings || 0}</strong> warns</span>
+                    <span><strong>${m.bans || 0}</strong> bans</span>
+                    <span><strong>${m.demotions || 0}</strong> demos</span>
+                    <span><strong>${m.exploits || 0}</strong> exploits</span>
                 </div>
-            `;
+            </div>`;
         }
         container.innerHTML = html;
     }
 
+    function displayDeleted(deleted) {
+        const container = document.getElementById('deletedList');
+        if (!deleted || deleted.length === 0) {
+            container.innerHTML = '<div class="empty-msg">🗑️ no recent deletions</div>';
+            return;
+        }
+        let html = '';
+        for (let i = 0; i < Math.min(deleted.length, 10); i++) {
+            const d = deleted[i];
+            const date = new Date(d.timestamp);
+            const dateStr = !isNaN(date.getTime()) ? date.toLocaleString() : d.timestamp || 'unknown';
+            html += `<div class="deleted-item">
+                <code>${escapeHtml(d.case_id)}</code> — ${escapeHtml(d.case_type)} · target: ${escapeHtml(d.target_user)}<br>
+                <span style="font-size:10px; opacity:0.7">deleted by: ${escapeHtml(d.deleted_by)} | ${dateStr} | reason: ${escapeHtml(d.reason)}</span>
+            </div>`;
+        }
+        container.innerHTML = html;
+    }
+
+    // fetch with smooth loading indicator
     async function fetchData() {
+        const refreshBtn = document.querySelector('.btn-refresh');
+        const originalText = refreshBtn?.innerHTML;
+        if (refreshBtn) refreshBtn.innerHTML = '⟳ loading...';
         try {
             const res = await fetch('data.json?v=' + Date.now());
-            if (!res.ok) throw new Error('data.json not found');
-            const data = await res.json();
-
-            // Store in localStorage as backup
-            localStorage.setItem('sgfrp_cases', JSON.stringify(data.cases || []));
-            
-            // Update stats
-            document.getElementById('totalCases').innerText = data.total_cases || 0;
-            document.getElementById('warnings').innerText = data.cases_by_type?.warning || 0;
-            document.getElementById('bans').innerText = (data.cases_by_type?.ban || 0) + (data.cases_by_type?.tempban || 0);
-            document.getElementById('demotions').innerText = data.cases_by_type?.demotion || 0;
-            document.getElementById('exploits').innerText = data.cases_by_type?.exploit || 0;
-
-            allCases = data.cases || [];
-            displayCases(allCases);
-            displayModerators(data.moderators || []);
-
-            if (data.last_updated) {
-                const d = new Date(data.last_updated);
-                document.getElementById('lastUpdated').innerHTML = `last updated: ${d.toLocaleString()}`;
+            if (res.ok) {
+                const data = await res.json();
+                document.getElementById('totalCases').innerText = data.total_cases || 0;
+                document.getElementById('warnings').innerText = data.cases_by_type?.warning || 0;
+                const totalBans = (data.cases_by_type?.ban || 0) + (data.cases_by_type?.tempban || 0);
+                document.getElementById('bans').innerText = totalBans;
+                document.getElementById('demotions').innerText = data.cases_by_type?.demotion || 0;
+                document.getElementById('exploits').innerText = data.cases_by_type?.exploit || 0;
+                allCases = data.cases || [];
+                applyFilterAndRender();
+                displayModerators(data.moderators || []);
+                if (data.last_updated) {
+                    document.getElementById('lastUpdated').innerHTML = `last updated: ${new Date(data.last_updated).toLocaleString()}`;
+                } else {
+                    document.getElementById('lastUpdated').innerHTML = `last updated: ${new Date().toLocaleString()}`;
+                }
+            } else {
+                document.getElementById('casesBody').innerHTML = '<tr><td colspan="7" class="empty-msg">⚠️ failed to load data.json</td></tr>';
+            }
+            // fetch deletions log
+            const delRes = await fetch('deleted_cases.json?v=' + Date.now());
+            if (delRes.ok) {
+                const delData = await delRes.json();
+                deletedCases = Array.isArray(delData) ? delData : [];
+                displayDeleted(deletedCases);
+            } else {
+                // no file: soft ignore
+                if(deletedCases.length===0) displayDeleted([]);
             }
         } catch (err) {
             console.warn(err);
-            // Try to load from localStorage as fallback
-            const cached = localStorage.getItem('sgfrp_cases');
-            if (cached) {
-                allCases = JSON.parse(cached);
-                displayCases(allCases);
-                updateStatsFromCases(allCases);
-                document.getElementById('casesBody').innerHTML = '<tr><td colspan="7" class="empty-msg">using cached data — refresh to sync</td></tr>';
-            } else {
-                document.getElementById('casesBody').innerHTML = '<tr><td colspan="7" class="empty-msg">unable to load data — make sure data.json exists</td></tr>';
-            }
+            document.getElementById('casesBody').innerHTML = '<tr><td colspan="7" class="empty-msg">🔌 network error / missing data</td></tr>';
+        } finally {
+            if (refreshBtn) refreshBtn.innerHTML = originalText || '⟳ refresh';
         }
+    }
+
+    function applyFilterAndRender() {
+        if (currentFilter === 'all') displayCases(allCases);
+        else displayCases(allCases.filter(c => c.type === currentFilter));
     }
 
     function filterCases(type) {
         currentFilter = type;
-        const btns = document.querySelectorAll('.filter-btn');
-        btns.forEach(btn => {
-            if (btn.getAttribute('data-filter') === type) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            if (btn.getAttribute('data-filter') === type) btn.classList.add('active');
+            else btn.classList.remove('active');
         });
-
-        if (type === 'all') {
-            displayCases(allCases);
-        } else {
-            const filtered = allCases.filter(c => c.type === type);
-            displayCases(filtered);
-        }
+        applyFilterAndRender();
     }
 
-    function searchCases() {
-        const keyword = document.getElementById('searchInput').value.trim().toLowerCase();
+    function searchCasesDirect() {
+        const keyword = document.getElementById('searchInput').value.toLowerCase().trim();
         if (!keyword) {
-            filterCases(currentFilter);
+            applyFilterAndRender();
             return;
         }
         const filtered = allCases.filter(c =>
@@ -791,16 +734,55 @@
         displayCases(filtered);
     }
 
-    // Close modal when clicking outside
-    document.getElementById('deleteModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-            closeDeleteModal();
-        }
-    });
+    function debouncedSearch() {
+        if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
+        searchDebounceTimer = setTimeout(() => {
+            searchCasesDirect();
+        }, 280);
+    }
 
-    // initial load + auto refresh every 15 seconds
-    fetchData();
-    setInterval(fetchData, 15000);
+    // modal interactions (smooth)
+    function showDeleteModal(caseId) {
+        pendingDelete = caseId;
+        document.getElementById('deleteCaseId').innerText = caseId;
+        const modal = document.getElementById('deleteModal');
+        modal.style.display = 'flex';
+        modal.style.opacity = '1';
+    }
+
+    function closeDeleteModal() {
+        const modal = document.getElementById('deleteModal');
+        modal.style.display = 'none';
+        pendingDelete = null;
+    }
+
+    function confirmDelete() {
+        if (!pendingDelete) return;
+        const GUILD_ID = 1392627166549905620;
+        const DEMO_REQ_CH = 1392634689885307021;
+        window.open(`https://discord.com/channels/${GUILD_ID}/${DEMO_REQ_CH}`, '_blank');
+        alert(`📌 to delete case ${pendingDelete}:\n1. go to discord channel\n2. run /deletecase ${pendingDelete} reason: violation handling`);
+        closeDeleteModal();
+    }
+
+    // background smooth refresh every 20s
+    let refreshInterval;
+    function startAutoRefresh() {
+        if (refreshInterval) clearInterval(refreshInterval);
+        refreshInterval = setInterval(() => {
+            fetchData();
+        }, 20000);
+    }
+
+    // init with extra smoothness
+    fetchData().then(() => {
+        startAutoRefresh();
+    });
+    // click outside modal close
+    window.onclick = function(e) {
+        const modal = document.getElementById('deleteModal');
+        if (e.target === modal) closeDeleteModal();
+    };
 </script>
 </body>
 </html>
