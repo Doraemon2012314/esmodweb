@@ -18,17 +18,21 @@
             color: #e0e0e0;
         }
 
-        /* Main container */
         .wrap {
             max-width: 1400px;
             margin: 0 auto;
         }
 
-        /* Header section */
+        /* Header */
         .top {
             margin-bottom: 28px;
             border-left: 4px solid #7c3aed;
             padding-left: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .top h1 {
@@ -82,7 +86,7 @@
             margin-top: 8px;
         }
 
-        /* Main card style */
+        /* Card style */
         .card {
             background: #111127;
             border-radius: 16px;
@@ -107,7 +111,7 @@
             color: #fff;
         }
 
-        /* Search box */
+        /* Search */
         .search-area {
             padding: 16px 22px;
             border-bottom: 1px solid #1e1e3a;
@@ -133,7 +137,7 @@
             color: #5a5a7a;
         }
 
-        /* Filter buttons */
+        /* Filters */
         .filters {
             padding: 12px 22px;
             display: flex;
@@ -260,6 +264,25 @@
             color: #c084fc;
         }
 
+        /* Delete button */
+        .delete-btn {
+            background: none;
+            border: none;
+            color: #dc2626;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: all 0.2s;
+            opacity: 0.6;
+        }
+
+        .delete-btn:hover {
+            opacity: 1;
+            background: #1a1a33;
+            transform: scale(1.05);
+        }
+
         /* Moderator list */
         .mod-list {
             padding: 16px 22px;
@@ -333,6 +356,64 @@
             color: #6a6a8a;
         }
 
+        /* Modal styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal {
+            background: #111127;
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 400px;
+            width: 90%;
+            border: 1px solid #2d2d55;
+        }
+
+        .modal h3 {
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .modal p {
+            color: #a0a0c0;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .modal-btn-cancel {
+            background: #1a1a33;
+            color: #c4c4dd;
+        }
+
+        .modal-btn-confirm {
+            background: #dc2626;
+            color: #fff;
+        }
+
         @media (max-width: 700px) {
             body {
                 padding: 12px;
@@ -350,6 +431,9 @@
             .mod-stats {
                 gap: 12px;
             }
+            .delete-btn {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -357,8 +441,13 @@
 <div class="wrap">
     <!-- header -->
     <div class="top">
-        <h1>mod panel</h1>
-        <p>cases · warnings · bans · demotions</p>
+        <div>
+            <h1>mod panel</h1>
+            <p>cases · warnings · bans · demotions</p>
+        </div>
+        <div>
+            <button class="btn-refresh" onclick="fetchData()">⟳ refresh</button>
+        </div>
     </div>
 
     <!-- stats row -->
@@ -389,7 +478,6 @@
     <div class="card">
         <div class="card-head">
             <h2>recent cases</h2>
-            <button class="btn-refresh" onclick="fetchData()">⟳ refresh</button>
         </div>
         <div class="search-area">
             <input type="text" class="search-input" id="searchInput" placeholder="search by case id, target, or moderator" onkeyup="searchCases()">
@@ -412,10 +500,11 @@
                         <th>moderator</th>
                         <th>status</th>
                         <th>date</th>
+                        <th style="width: 50px;"></th>
                     </tr>
                 </thead>
                 <tbody id="casesBody">
-                    <tr><td colspan="6" class="empty-msg">loading cases...</td></tr>
+                    <tr><td colspan="7" class="empty-msg">loading cases...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -436,9 +525,23 @@
     </div>
 </div>
 
+<!-- Delete confirmation modal -->
+<div id="deleteModal" class="modal-overlay">
+    <div class="modal">
+        <h3>delete case</h3>
+        <p>are you sure you want to delete case <code id="deleteCaseId"></code>? this action cannot be undone.</p>
+        <div class="modal-buttons">
+            <button class="modal-btn modal-btn-cancel" onclick="closeDeleteModal()">cancel</button>
+            <button class="modal-btn modal-btn-confirm" onclick="confirmDelete()">delete</button>
+        </div>
+    </div>
+</div>
+
 <script>
     let allCases = [];
     let currentFilter = 'all';
+    let pendingDelete = null;
+    let adminMode = true; // Set to false to hide delete buttons for non-admins
 
     function getTagClass(type) {
         const map = {
@@ -481,10 +584,94 @@
         });
     }
 
+    function showDeleteModal(caseId) {
+        pendingDelete = caseId;
+        document.getElementById('deleteCaseId').innerText = caseId;
+        document.getElementById('deleteModal').style.display = 'flex';
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').style.display = 'none';
+        pendingDelete = null;
+    }
+
+    async function confirmDelete() {
+        if (!pendingDelete) return;
+        
+        try {
+            // Send delete request to GitHub API (we'll use localStorage as temp storage)
+            // Since we can't directly modify the JSON file from browser, we'll use localStorage
+            // and show instructions for manual deletion
+            
+            let cases = JSON.parse(localStorage.getItem('sgfrp_cases') || '[]');
+            if (cases.length === 0) {
+                cases = allCases;
+            }
+            
+            const updatedCases = cases.filter(c => c.case_id !== pendingDelete);
+            
+            if (updatedCases.length === cases.length) {
+                alert('case not found');
+                closeDeleteModal();
+                return;
+            }
+            
+            localStorage.setItem('sgfrp_cases', JSON.stringify(updatedCases));
+            
+            // Update the displayed data
+            allCases = updatedCases;
+            displayCases(allCases);
+            
+            // Update stats
+            updateStatsFromCases(updatedCases);
+            
+            alert(`Case ${pendingDelete} deleted locally. To permanently delete from the bot, run /deletecase ${pendingDelete} in Discord.`);
+            
+            closeDeleteModal();
+            
+        } catch (err) {
+            console.error('Delete error:', err);
+            alert('Error deleting case. Make sure you have admin permissions.');
+            closeDeleteModal();
+        }
+    }
+
+    function updateStatsFromCases(cases) {
+        const total = cases.length;
+        const warnings = cases.filter(c => c.type === 'warning').length;
+        const bans = cases.filter(c => c.type === 'ban' || c.type === 'tempban').length;
+        const demotions = cases.filter(c => c.type === 'demotion').length;
+        const exploits = cases.filter(c => c.type === 'exploit').length;
+        
+        document.getElementById('totalCases').innerText = total;
+        document.getElementById('warnings').innerText = warnings;
+        document.getElementById('bans').innerText = bans;
+        document.getElementById('demotions').innerText = demotions;
+        document.getElementById('exploits').innerText = exploits;
+        
+        // Update moderator stats
+        const modStats = {};
+        cases.forEach(c => {
+            if (!modStats[c.moderator]) {
+                modStats[c.moderator] = { total: 0, warnings: 0, bans: 0, demotions: 0, exploits: 0 };
+            }
+            modStats[c.moderator].total++;
+            if (c.type === 'warning') modStats[c.moderator].warnings++;
+            else if (c.type === 'ban' || c.type === 'tempban') modStats[c.moderator].bans++;
+            else if (c.type === 'demotion') modStats[c.moderator].demotions++;
+            else if (c.type === 'exploit') modStats[c.moderator].exploits++;
+        });
+        
+        const sortedMods = Object.entries(modStats).map(([id, stats]) => ({ id, ...stats }))
+            .sort((a, b) => b.total - a.total);
+        
+        displayModerators(sortedMods);
+    }
+
     function displayCases(cases) {
         const tbody = document.getElementById('casesBody');
         if (!cases || cases.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6" class="empty-msg">no cases found</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" class="empty-msg">no cases found</td></tr>';
             return;
         }
 
@@ -499,6 +686,7 @@
                     <td><code>${escapeHtml(c.moderator || '?')}</code></td>
                     <td><span class="status-badge ${getStatusClass(c.status)}">${formatStatusLabel(c.status)}</span></td>
                     <td>${formatShortDate(c.timestamp)}</td>
+                    <td><button class="delete-btn" onclick="showDeleteModal('${escapeHtml(c.case_id)}')" title="delete case">🗑️</button></td>
                 </tr>
             `;
         }
@@ -537,7 +725,10 @@
             if (!res.ok) throw new Error('data.json not found');
             const data = await res.json();
 
-            // update stats
+            // Store in localStorage as backup
+            localStorage.setItem('sgfrp_cases', JSON.stringify(data.cases || []));
+            
+            // Update stats
             document.getElementById('totalCases').innerText = data.total_cases || 0;
             document.getElementById('warnings').innerText = data.cases_by_type?.warning || 0;
             document.getElementById('bans').innerText = (data.cases_by_type?.ban || 0) + (data.cases_by_type?.tempban || 0);
@@ -554,7 +745,16 @@
             }
         } catch (err) {
             console.warn(err);
-            document.getElementById('casesBody').innerHTML = '<tr><td colspan="6" class="empty-msg">unable to load data — make sure data.json exists</td></tr>';
+            // Try to load from localStorage as fallback
+            const cached = localStorage.getItem('sgfrp_cases');
+            if (cached) {
+                allCases = JSON.parse(cached);
+                displayCases(allCases);
+                updateStatsFromCases(allCases);
+                document.getElementById('casesBody').innerHTML = '<tr><td colspan="7" class="empty-msg">using cached data — refresh to sync</td></tr>';
+            } else {
+                document.getElementById('casesBody').innerHTML = '<tr><td colspan="7" class="empty-msg">unable to load data — make sure data.json exists</td></tr>';
+            }
         }
     }
 
@@ -590,6 +790,13 @@
         );
         displayCases(filtered);
     }
+
+    // Close modal when clicking outside
+    document.getElementById('deleteModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeDeleteModal();
+        }
+    });
 
     // initial load + auto refresh every 15 seconds
     fetchData();
