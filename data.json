@@ -1,9 +1,21 @@
 {
-  "total_cases": 1,
+  "total_cases": 2,
   "cases_by_type": {
-    "exploit": 1
+    "exploit": 1,
+    "warning": 1
   },
   "cases": [
+    {
+      "case_id": "Z5L24MMT",
+      "type": "warning",
+      "target": "Test",
+      "timestamp": "2026-04-12 06:42:45.825296",
+      "moderator": "1252174197816561705",
+      "additional_info": "None",
+      "status": "Awaiting",
+      "old_rank": "",
+      "new_rank": ""
+    },
     {
       "case_id": "H0FSW5PN",
       "type": "exploit",
@@ -19,12 +31,12 @@
   "moderators": [
     {
       "id": "1252174197816561705",
-      "total": 1,
-      "warnings": 0,
+      "total": 2,
+      "warnings": 1,
       "bans": 0,
       "demotions": 0,
       "exploits": 1
     }
   ],
-  "last_updated": "2026-04-12T06:42:43.762017"
+  "last_updated": "2026-04-12T06:42:45.840919"
 }
