@@ -1,8 +1,8 @@
 {
-  "total_cases": 6,
+  "total_cases": 5,
   "cases_by_type": {
     "ban": 2,
-    "demotion": 2,
+    "demotion": 1,
     "exploit": 1,
     "warning": 1
   },
@@ -15,17 +15,6 @@
       "moderator": "1252174197816561705",
       "additional_info": "nope",
       "status": "Awaiting",
-      "old_rank": "Supervisor",
-      "new_rank": "Worker"
-    },
-    {
-      "case_id": "KDX8L7XP",
-      "type": "demotion",
-      "target": "Test2",
-      "timestamp": "2026-04-12 06:45:00.457457",
-      "moderator": "1252174197816561705",
-      "additional_info": "none",
-      "status": "DENIED: No proof",
       "old_rank": "Supervisor",
       "new_rank": "Worker"
     },
@@ -77,12 +66,12 @@
   "moderators": [
     {
       "id": "1252174197816561705",
-      "total": 6,
+      "total": 5,
       "warnings": 1,
       "bans": 2,
-      "demotions": 2,
+      "demotions": 1,
       "exploits": 1
     }
   ],
-  "last_updated": "2026-04-12T12:11:39.546400"
+  "last_updated": "2026-04-12T12:11:41.244911"
 }
