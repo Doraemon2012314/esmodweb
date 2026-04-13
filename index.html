@@ -51,6 +51,7 @@
             gap: 4px;
             margin-bottom: 28px;
             border-bottom: 1px solid #222228;
+            flex-wrap: wrap;
         }
 
         .tab-btn {
@@ -288,7 +289,6 @@
             padding: 5px 12px;
             font-size: 11px;
             font-family: monospace;
-            transition: all 0.2s ease;
         }
 
         .delete-btn:hover {
@@ -372,7 +372,6 @@
         .rank-2 { color: #c0c0c0; }
         .rank-3 { color: #cd7f32; }
 
-        /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -438,45 +437,6 @@
             border-color: #ff7777;
         }
 
-        .loading-spinner {
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            border: 2px solid #fff;
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: spin 0.6s linear infinite;
-            margin-left: 8px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: #1a1a22;
-            border-left: 3px solid #a0f0a0;
-            padding: 12px 20px;
-            font-family: monospace;
-            font-size: 12px;
-            color: #a0f0a0;
-            z-index: 1100;
-            animation: slideIn 0.3s ease;
-        }
-
-        .toast.error {
-            border-left-color: #ffa0a0;
-            color: #ffa0a0;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(100px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
         .deleted-item {
             font-size: 11px;
             color: #81819b;
@@ -518,6 +478,9 @@
             padding: 2px 6px;
         }
 
+        .log-success { color: #a0f0a0; }
+        .log-error { color: #ffa0a0; }
+
         @media (max-width: 700px) {
             body { padding: 16px; }
             .stat-num { font-size: 30px; }
@@ -530,7 +493,7 @@
 <div class="wrap">
     <div class="top">
         <h1>mod panel</h1>
-        <p>cases · points · quota history · moderator audit</p>
+        <p>cases · points · quota history · command logs</p>
     </div>
 
     <!-- Tab Navigation -->
@@ -538,6 +501,7 @@
         <button class="tab-btn active" data-tab="cases">cases</button>
         <button class="tab-btn" data-tab="points">points</button>
         <button class="tab-btn" data-tab="quota">quota history</button>
+        <button class="tab-btn" data-tab="logs">command logs</button>
     </div>
 
     <!-- ==================== TAB 1: CASES ==================== -->
@@ -569,7 +533,7 @@
             <div class="table-wrap">
                 <table>
                     <thead><tr><th>case id</th><th>type</th><th>target</th><th>moderator</th><th>status</th><th>date</th><th></th></tr></thead>
-                    <tbody id="casesBody"><tr><td colspan="7" class="empty-msg">⟳ fetching data...</td></tr></tbody>
+                    <tbody id="casesBody"><tr><td colspan="7" class="empty-msg">⟳ fetching data......</td></tr></tbody>
                 </table>
             </div>
         </div>
@@ -618,6 +582,44 @@
         </div>
     </div>
 
+    <!-- ==================== TAB 4: COMMAND LOGS ==================== -->
+    <div id="tab-logs" class="tab-content">
+        <div class="card">
+            <div class="card-head">
+                <h2>command usage logs</h2>
+                <button class="btn-refresh" onclick="fetchLogsData()">⟳ refresh</button>
+            </div>
+            <div class="search-area">
+                <input type="text" class="search-input" id="logSearchInput" placeholder="search by command, user, or channel..." onkeyup="searchLogs()">
+            </div>
+            <div class="filters" id="logFilters">
+                <button class="filter-btn active" data-logfilter="all" onclick="filterLogs('all')">all</button>
+                <button class="filter-btn" data-logfilter="addrole" onclick="filterLogs('addrole')">addrole</button>
+                <button class="filter-btn" data-logfilter="removerole" onclick="filterLogs('removerole')">removerole</button>
+                <button class="filter-btn" data-logfilter="purge" onclick="filterLogs('purge')">purge</button>
+                <button class="filter-btn" data-logfilter="mute" onclick="filterLogs('mute')">mute</button>
+                <button class="filter-btn" data-logfilter="unmute" onclick="filterLogs('unmute')">unmute</button>
+                <button class="filter-btn" data-logfilter="ping" onclick="filterLogs('ping')">ping</button>
+                <button class="filter-btn" data-logfilter="restart" onclick="filterLogs('restart')">restart</button>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>timestamp</th>
+                            <th>user</th>
+                            <th>command</th>
+                            <th>args</th>
+                            <th>channel</th>
+                            <th>status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logsBody"><tr><td colspan="6" class="empty-msg">loading logs...</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <div class="footer-note" id="lastUpdated">last updated: —</div>
 </div>
 
@@ -637,7 +639,7 @@
     // ========== CONFIGURATION ==========
     const GITHUB_USERNAME = "Doraemon2012314";
     const GITHUB_REPO = "esmodweb";
-    const BOT_API_URL = "http://YOUR_BOT_IP:5000";  // <-- REPLACE WITH YOUR BOT'S IP/PORT
+    const BOT_API_URL = "http://YOUR_BOT_IP:5000";
 
     // ========== TAB SWITCHING ==========
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -650,6 +652,7 @@
             if (tabName === 'cases') fetchCasesData();
             else if (tabName === 'points') fetchPointsData();
             else if (tabName === 'quota') fetchQuotaData();
+            else if (tabName === 'logs') fetchLogsData();
         });
     });
 
@@ -669,21 +672,14 @@
             
             const response = await fetch(`${BOT_API_URL}/api/delete_case`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    case_id: caseId,
-                    deleted_by: 'web_dashboard',
-                    reason: 'Deleted from web dashboard'
-                })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ case_id: caseId, deleted_by: 'web_dashboard', reason: 'Deleted from web dashboard' })
             });
             
             const data = await response.json();
             
             if (data.success) {
                 showToast(`case ${caseId} deleted successfully`);
-                // Refresh the cases list
                 await fetchCasesData();
                 return true;
             } else {
@@ -718,6 +714,13 @@
         const d = new Date(dateStr);
         if (isNaN(d.getTime())) return dateStr;
         return `${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`;
+    }
+
+    function formatDateTime(dateStr) {
+        if (!dateStr) return '-';
+        const d = new Date(dateStr);
+        if (isNaN(d.getTime())) return dateStr;
+        return d.toLocaleString();
     }
 
     function getTagClass(type) {
@@ -891,18 +894,16 @@
                     let rankDisplay = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i+1}`;
                     let rankClass = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : '';
                     html += `<tr><td class="${rankClass}">${rankDisplay}</td>
-                             <td><code>${escapeHtml(p.username || p.user_id)}</code></td>
-                             <td class="points-value">${p.points}</td>
-                             <td>${formatDate(p.last_updated)}</td></tr>`;
+                              <td><code>${escapeHtml(p.username || p.user_id)}</code></td>
+                              <td class="points-value">${p.points}</td>
+                              <td>${formatDate(p.last_updated)}</td></tr>`;
                 }
                 document.getElementById('totalUsers').innerText = points.length;
                 document.getElementById('totalPoints').innerText = totalPoints;
                 document.getElementById('topPoints').innerText = topScore;
                 document.getElementById('pointsBody').innerHTML = html || '<tr><td colspan="4" class="empty-msg">no points data</td></tr>';
             }
-        } catch (err) {
-            console.error(err);
-        }
+        } catch (err) { console.error(err); }
     }
 
     // ========== QUOTA HISTORY DATA ==========
@@ -935,21 +936,101 @@
                 }
                 container.innerHTML = html;
             }
+        } catch (err) { console.error(err); }
+    }
+
+    // ========== COMMAND LOGS DATA ==========
+    let allLogs = [];
+    let currentLogFilter = 'all';
+    let logSearchDebounceTimer = null;
+
+    function displayLogs(logs) {
+        const tbody = document.getElementById('logsBody');
+        if (!logs || logs.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" class="empty-msg">no logs found</td></tr>';
+            return;
+        }
+        let html = '';
+        for (let i = 0; i < Math.min(logs.length, 200); i++) {
+            const l = logs[i];
+            const argsStr = JSON.stringify(l.args || {}).substring(0, 50);
+            const statusClass = l.success ? 'log-success' : 'log-error';
+            const statusText = l.success ? '✓ success' : '✗ failed';
+            html += `<tr>
+                <td style="font-size:11px;">${formatDateTime(l.timestamp)}</td>
+                <td><code>${escapeHtml(l.user_name)}</code></td>
+                <td><span class="badge">${escapeHtml(l.command_name)}</span></td>
+                <td style="font-size:11px; color:#888;">${escapeHtml(argsStr)}</td>
+                <td><code>${escapeHtml(l.channel_name)}</code></td>
+                <td class="${statusClass}">${statusText}</td>
+            </tr>`;
+        }
+        tbody.innerHTML = html;
+    }
+
+    async function fetchLogsData() {
+        try {
+            const res = await fetch(`https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/command_logs.json?v=${Date.now()}`);
+            if (res.ok) {
+                const data = await res.json();
+                allLogs = data.command_logs || [];
+                applyLogFilter();
+                if (data.last_updated) {
+                    document.getElementById('lastUpdated').innerHTML = `last updated: ${new Date(data.last_updated).toLocaleString()}`;
+                }
+            } else {
+                document.getElementById('logsBody').innerHTML = '<tr><td colspan="6" class="empty-msg">no logs available yet</td></tr>';
+            }
         } catch (err) {
             console.error(err);
+            document.getElementById('logsBody').innerHTML = '<tr><td colspan="6" class="empty-msg">unable to load logs</td></tr>';
         }
+    }
+
+    function applyLogFilter() {
+        if (currentLogFilter === 'all') {
+            displayLogs(allLogs);
+        } else {
+            const filtered = allLogs.filter(l => l.command_name === currentLogFilter);
+            displayLogs(filtered);
+        }
+    }
+
+    function filterLogs(type) {
+        currentLogFilter = type;
+        document.querySelectorAll('#logFilters .filter-btn').forEach(btn => {
+            if (btn.getAttribute('data-logfilter') === type) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+        applyLogFilter();
+    }
+
+    function searchLogs() {
+        const keyword = document.getElementById('logSearchInput').value.toLowerCase().trim();
+        if (!keyword) {
+            applyLogFilter();
+            return;
+        }
+        const filtered = allLogs.filter(l =>
+            (l.command_name && l.command_name.toLowerCase().includes(keyword)) ||
+            (l.user_name && l.user_name.toLowerCase().includes(keyword)) ||
+            (l.channel_name && l.channel_name.toLowerCase().includes(keyword))
+        );
+        displayLogs(filtered);
     }
 
     // ========== INITIAL LOAD ==========
     fetchCasesData();
     fetchPointsData();
     fetchQuotaData();
+    fetchLogsData();
 
     setInterval(() => {
         const activeTab = document.querySelector('.tab-btn.active').getAttribute('data-tab');
         if (activeTab === 'cases') fetchCasesData();
         else if (activeTab === 'points') fetchPointsData();
         else if (activeTab === 'quota') fetchQuotaData();
+        else if (activeTab === 'logs') fetchLogsData();
     }, 20000);
 
     window.onclick = function(e) {
