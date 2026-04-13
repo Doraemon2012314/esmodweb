@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>ES | Moderation Dashboard</title>
+    <title>ES | Moderation Panel</title>
     <style>
         * {
             margin: 0;
@@ -440,18 +440,13 @@
             bottom: 30px;
             right: 30px;
             background: #1a1a22;
-            border-left: 3px solid #a0f0a0;
+            border-left: 3px solid #ffa0a0;
             padding: 12px 20px;
             font-family: monospace;
             font-size: 12px;
-            color: #a0f0a0;
+            color: #ffa0a0;
             z-index: 1100;
             animation: slideIn 0.3s ease;
-        }
-
-        .toast.error {
-            border-left-color: #ffa0a0;
-            color: #ffa0a0;
         }
 
         @keyframes slideIn {
@@ -502,6 +497,18 @@
 
         .log-success { color: #a0f0a0; }
         .log-error { color: #ffa0a0; }
+        .copy-btn {
+            background: #1a1a33;
+            border: 1px solid #333;
+            padding: 2px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 10px;
+            margin-left: 8px;
+        }
+        .copy-btn:hover {
+            background: #2a2a4a;
+        }
 
         @media (max-width: 700px) {
             body { padding: 16px; }
@@ -638,10 +645,16 @@
 <div id="deleteModal" class="modal-overlay">
     <div class="modal">
         <h3>delete case</h3>
-        <p>are you sure you want to delete case <code id="deleteCaseId"></code>?<br>this action cannot be undone.</p>
+        <p>to delete case <code id="deleteCaseId"></code>:</p>
+        <p style="background:#0a0a0c; padding:12px; border-radius:8px; margin:15px 0; font-family:monospace; font-size:12px;">
+            1. copy this command:<br>
+            <code id="deleteCommand" style="display:inline-block; background:#000; padding:8px; margin-top:8px; word-break:break-all;">/deletecase XXXXXXX</code>
+            <button class="copy-btn" onclick="copyCommand()">copy</button>
+        </p>
+        <p>2. go to discord and paste the command</p>
+        <p>3. press enter to delete</p>
         <div class="modal-buttons">
-            <button class="modal-btn" onclick="closeDeleteModal()">cancel</button>
-            <button class="modal-btn modal-btn-confirm" onclick="confirmDelete()">delete</button>
+            <button class="modal-btn" onclick="closeDeleteModal()">close</button>
         </div>
     </div>
 </div>
@@ -650,7 +663,6 @@
     // ========== GITHUB CONFIGURATION ==========
     const GITHUB_USERNAME = "Doraemon2012314";
     const GITHUB_REPO = "esmodweb";
-    const GITHUB_TOKEN = "ghp_xAVkJibSble6QiwopSTo0IkIZF8ksz2azxDr";
 
     // ========== TAB SWITCHING ==========
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -667,159 +679,38 @@
         });
     });
 
+    // ========== DELETE MODAL ==========
+    let pendingDeleteId = null;
+
+    function showDeleteModal(caseId) {
+        pendingDeleteId = caseId;
+        document.getElementById('deleteCaseId').innerText = caseId;
+        document.getElementById('deleteCommand').innerHTML = `/deletecase ${caseId}`;
+        document.getElementById('deleteModal').style.display = 'flex';
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('deleteModal').style.display = 'none';
+        pendingDeleteId = null;
+    }
+
+    function copyCommand() {
+        const command = `/deletecase ${pendingDeleteId}`;
+        navigator.clipboard.writeText(command);
+        showToast("command copied!");
+    }
+
     function showToast(message, isError = false) {
         const toast = document.createElement('div');
-        toast.className = `toast ${isError ? 'error' : ''}`;
+        toast.className = 'toast';
         toast.textContent = message;
         document.body.appendChild(toast);
         setTimeout(() => toast.remove(), 3000);
     }
 
-    // ========== GITHUB API FUNCTIONS ==========
-    async function uploadToGitHub(path, content, commitMessage) {
-        try {
-            const encoded = btoa(unescape(encodeURIComponent(content)));
-            const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${path}`;
-            const headers = {
-                "Authorization": `token ${GITHUB_TOKEN}`,
-                "Accept": "application/vnd.github.v3+json"
-            };
-            
-            let sha = null;
-            const getResponse = await fetch(url, { headers });
-            if (getResponse.status === 200) {
-                const data = await getResponse.json();
-                sha = data.sha;
-            }
-            
-            const uploadData = { message: commitMessage, content: encoded, branch: "main" };
-            if (sha) uploadData.sha = sha;
-            
-            const putResponse = await fetch(url, {
-                method: 'PUT',
-                headers: headers,
-                body: JSON.stringify(uploadData)
-            });
-            
-            return putResponse.status === 200 || putResponse.status === 201;
-        } catch (err) {
-            console.error("GitHub upload error:", err);
-            return false;
-        }
-    }
-
-    // ========== DELETE CASE VIA GITHUB ==========
-    async function deleteCaseViaGitHub(caseId) {
-        try {
-            showToast(`deleting case ${caseId}...`);
-            
-            // Find the case to delete
-            const caseToDelete = allCases.find(c => c.case_id === caseId);
-            if (!caseToDelete) {
-                showToast("case not found", true);
-                return false;
-            }
-            
-            // Remove from local array
-            const updatedCases = allCases.filter(c => c.case_id !== caseId);
-            
-            // Update stats
-            const newData = {
-                total_cases: updatedCases.length,
-                cases_by_type: {
-                    warning: updatedCases.filter(c => c.type === 'warning').length,
-                    ban: updatedCases.filter(c => c.type === 'ban').length,
-                    tempban: updatedCases.filter(c => c.type === 'tempban').length,
-                    demotion: updatedCases.filter(c => c.type === 'demotion').length,
-                    exploit: updatedCases.filter(c => c.type === 'exploit').length
-                },
-                cases: updatedCases,
-                moderators: calculateModeratorStats(updatedCases),
-                last_updated: new Date().toISOString()
-            };
-            
-            // Upload new data.json
-            const dataContent = JSON.stringify(newData, null, 2);
-            const dataSuccess = await uploadToGitHub("data.json", dataContent, `Delete case ${caseId} via web`);
-            
-            if (!dataSuccess) {
-                showToast("failed to delete case", true);
-                return false;
-            }
-            
-            // Log deletion
-            const deletedEntry = {
-                case_id: caseId,
-                case_type: caseToDelete.type,
-                target_user: caseToDelete.target,
-                deleted_by: "web_dashboard",
-                reason: "Deleted via web dashboard",
-                timestamp: new Date().toISOString()
-            };
-            
-            let deletedLog = [];
-            try {
-                const delRes = await fetch(`https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/deleted_cases.json?v=${Date.now()}`);
-                if (delRes.ok) {
-                    deletedLog = await delRes.json();
-                }
-            } catch(e) {}
-            
-            const updatedDeleted = [deletedEntry, ...deletedLog].slice(0, 100);
-            const deletedContent = JSON.stringify(updatedDeleted, null, 2);
-            await uploadToGitHub("deleted_cases.json", deletedContent, `Log deletion of ${caseId}`);
-            
-            // Update local state
-            allCases = updatedCases;
-            displayCases(allCases);
-            updateStatsFromCases(updatedCases);
-            
-            showToast(`case ${caseId} deleted successfully`);
-            return true;
-            
-        } catch (err) {
-            console.error("Delete error:", err);
-            showToast(`failed to delete: ${err.message}`, true);
-            return false;
-        }
-    }
-
-    function calculateModeratorStats(cases) {
-        const stats = {};
-        for (const c of cases) {
-            if (!stats[c.moderator]) {
-                stats[c.moderator] = { total: 0, warnings: 0, bans: 0, demotions: 0, exploits: 0 };
-            }
-            stats[c.moderator].total++;
-            if (c.type === 'warning') stats[c.moderator].warnings++;
-            else if (c.type === 'ban' || c.type === 'tempban') stats[c.moderator].bans++;
-            else if (c.type === 'demotion') stats[c.moderator].demotions++;
-            else if (c.type === 'exploit') stats[c.moderator].exploits++;
-        }
-        return Object.entries(stats).map(([id, s]) => ({ id, ...s })).sort((a, b) => b.total - a.total);
-    }
-
-    function updateStatsFromCases(cases) {
-        const total = cases.length;
-        const warnings = cases.filter(c => c.type === 'warning').length;
-        const bans = cases.filter(c => c.type === 'ban' || c.type === 'tempban').length;
-        const demotions = cases.filter(c => c.type === 'demotion').length;
-        const exploits = cases.filter(c => c.type === 'exploit').length;
-        
-        document.getElementById('totalCases').innerText = total;
-        document.getElementById('warnings').innerText = warnings;
-        document.getElementById('bans').innerText = bans;
-        document.getElementById('demotions').innerText = demotions;
-        document.getElementById('exploits').innerText = exploits;
-        
-        const modStats = calculateModeratorStats(cases);
-        displayModerators(modStats);
-    }
-
     // ========== CASES DATA ==========
     let allCases = [];
     let currentFilter = 'all';
-    let pendingDelete = null;
     let searchDebounceTimer = null;
 
     function escapeHtml(str) {
@@ -978,26 +869,6 @@
     function debouncedSearch() {
         if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
         searchDebounceTimer = setTimeout(() => searchCasesDirect(), 280);
-    }
-
-    function showDeleteModal(caseId) {
-        pendingDelete = caseId;
-        document.getElementById('deleteCaseId').innerText = caseId;
-        document.getElementById('deleteModal').style.display = 'flex';
-    }
-
-    function closeDeleteModal() {
-        document.getElementById('deleteModal').style.display = 'none';
-        pendingDelete = null;
-    }
-
-    async function confirmDelete() {
-        if (!pendingDelete) return;
-        const caseId = pendingDelete;
-        closeDeleteModal();
-        await deleteCaseViaGitHub(caseId);
-        pendingDelete = null;
-        await fetchCasesData();
     }
 
     // ========== POINTS DATA ==========
