@@ -18,28 +18,17 @@
             color: #eef2ff;
             font-weight: 400;
             line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* smoother global transitions */
         .wrap {
             max-width: 1440px;
             margin: 0 auto;
-            animation: fadeSlideUp 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
-        @keyframes fadeSlideUp {
-            0% { opacity: 0; transform: translateY(12px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        /* refined header */
         .top {
             margin-bottom: 36px;
             border-left: 3px solid #ffffff;
             padding-left: 24px;
-            transition: border-color 0.2s;
         }
 
         .top h1 {
@@ -47,22 +36,71 @@
             font-weight: 500;
             color: #ffffff;
             letter-spacing: -0.3px;
-            background: linear-gradient(135deg, #ffffff, #c0c0c0);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            display: inline-block;
         }
 
         .top p {
             color: #8b8b9e;
             font-size: 13px;
             margin-top: 8px;
-            font-family: 'SF Mono', monospace;
-            letter-spacing: 0.2px;
+            font-family: monospace;
         }
 
-        /* stat cards - soft border + hover */
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 28px;
+            border-bottom: 1px solid #222228;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 12px 28px;
+            font-size: 14px;
+            font-family: monospace;
+            color: #8b8b9e;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover {
+            color: #ffffff;
+        }
+
+        .tab-btn.active {
+            color: #ffffff;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #ffffff;
+        }
+
+        .tab-btn {
+            position: relative;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Stats Row */
         .stat-row {
             display: flex;
             gap: 18px;
@@ -77,24 +115,18 @@
             flex: 1;
             min-width: 130px;
             transition: all 0.25s ease;
-            border-radius: 0px;
-            position: relative;
-            overflow: hidden;
         }
 
         .stat-card:hover {
             border-color: #3f3f48;
             background: #0e0e12;
-            transform: translateY(-2px);
         }
 
         .stat-num {
             font-size: 40px;
             font-weight: 500;
             color: #ffffff;
-            font-family: 'SF Mono', monospace;
-            letter-spacing: -0.5px;
-            transition: transform 0.2s;
+            font-family: monospace;
         }
 
         .stat-label {
@@ -103,19 +135,13 @@
             margin-top: 10px;
             text-transform: uppercase;
             letter-spacing: 1.2px;
-            font-weight: 500;
         }
 
-        /* card styling */
+        /* Card */
         .card {
             background: #08080c;
             border: 1px solid #222228;
             margin-bottom: 28px;
-            transition: box-shadow 0.2s, border-color 0.2s;
-        }
-
-        .card:hover {
-            border-color: #2c2c34;
         }
 
         .card-head {
@@ -132,13 +158,9 @@
             font-size: 16px;
             font-weight: 480;
             color: #f0f0fc;
-            font-family: 'SF Mono', monospace;
-            letter-spacing: -0.2px;
-            background: rgba(255,255,240,0.03);
-            padding-left: 0;
+            font-family: monospace;
         }
 
-        /* smooth search */
         .search-area {
             padding: 18px 24px;
             border-bottom: 1px solid #222228;
@@ -151,18 +173,15 @@
             border: 1px solid #2c2c34;
             color: #eef2ff;
             font-size: 13px;
-            font-family: 'SF Mono', monospace;
-            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            font-family: monospace;
         }
 
         .search-input:focus {
             outline: none;
             border-color: #ffffff;
             background: #0a0a0e;
-            box-shadow: 0 0 0 1px rgba(255,255,255,0.1);
         }
 
-        /* filters with micro-interaction */
         .filters {
             padding: 14px 24px;
             display: flex;
@@ -179,29 +198,22 @@
             font-family: monospace;
             color: #bbbbcc;
             cursor: pointer;
-            transition: all 0.18s ease;
-            letter-spacing: 0.3px;
         }
 
         .filter-btn:hover {
             background: #191921;
             border-color: #4a4a5a;
             color: #f0f0ff;
-            transform: scale(0.97);
         }
 
         .filter-btn.active {
             background: #ffffff;
             color: #000000;
             border-color: #ffffff;
-            font-weight: 500;
-            box-shadow: 0 2px 6px rgba(255,255,255,0.1);
         }
 
-        /* table enhancements */
         .table-wrap {
             overflow-x: auto;
-            scroll-behavior: smooth;
         }
 
         table {
@@ -218,43 +230,32 @@
             background: #050507;
             border-bottom: 1px solid #26262c;
             font-family: monospace;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         td {
             padding: 14px 18px;
             font-size: 12px;
             border-bottom: 1px solid #16161c;
-            font-family: 'SF Mono', monospace;
-            transition: background 0.12s;
-        }
-
-        tr {
-            transition: background 0.12s;
+            font-family: monospace;
         }
 
         tr:hover td {
             background: #111116;
         }
 
-        /* badges refined */
-        .tag {
+        .badge {
             display: inline-block;
             padding: 4px 12px;
             font-size: 10px;
             font-family: monospace;
             font-weight: 500;
-            border-radius: 0px;
-            letter-spacing: 0.3px;
-            transition: opacity 0.1s;
         }
 
-        .tag-warning { background: #2a2418; color: #ffdd99; border-left: 2px solid #ffb347; }
-        .tag-ban { background: #2a1a1a; color: #ffacac; border-left: 2px solid #ff5e5e; }
-        .tag-tempban { background: #26221c; color: #ffcc88; border-left: 2px solid #e6b422; }
-        .tag-demotion { background: #1e1e2a; color: #bbbbff; border-left: 2px solid #7c7cff; }
-        .tag-exploit { background: #1e222a; color: #88ccff; border-left: 2px solid #3a86ff; }
+        .badge-warning { background: #2a2418; color: #ffdd99; border-left: 2px solid #ffb347; }
+        .badge-ban { background: #2a1a1a; color: #ffacac; border-left: 2px solid #ff5e5e; }
+        .badge-tempban { background: #26221c; color: #ffcc88; border-left: 2px solid #e6b422; }
+        .badge-demotion { background: #1e1e2a; color: #bbbbff; border-left: 2px solid #7c7cff; }
+        .badge-exploit { background: #1e222a; color: #88ccff; border-left: 2px solid #3a86ff; }
 
         .status {
             display: inline-flex;
@@ -263,7 +264,6 @@
             padding: 4px 12px;
             font-size: 10px;
             font-family: monospace;
-            font-weight: 500;
         }
         .status::before {
             content: "●";
@@ -275,7 +275,7 @@
         .status-pending { background: #2a2818; color: #ffe6a3; }
 
         code {
-            font-family: 'SF Mono', monospace;
+            font-family: monospace;
             font-size: 11px;
             background: #111116;
             padding: 3px 8px;
@@ -283,7 +283,6 @@
             color: #e2e2ff;
         }
 
-        /* delete button smooth */
         .delete-btn {
             background: none;
             border: 1px solid #4a2a2a;
@@ -292,18 +291,14 @@
             padding: 5px 12px;
             font-size: 11px;
             font-family: monospace;
-            transition: all 0.2s ease;
-            border-radius: 2px;
         }
 
         .delete-btn:hover {
             background: #2a1818;
             border-color: #ff8a8a;
-            transform: scale(0.96);
             color: #ffc0c0;
         }
 
-        /* moderator list - modern entries */
         .mod-list {
             padding: 8px 20px 16px 20px;
         }
@@ -316,8 +311,8 @@
             border-bottom: 1px solid #1a1a22;
             flex-wrap: wrap;
             gap: 12px;
-            transition: background 0.12s;
         }
+
         .mod-item:hover {
             background: #0c0c10;
         }
@@ -331,13 +326,11 @@
 
         .mod-stats span {
             color: #8e8ea8;
-            transition: color 0.1s;
         }
 
         .mod-stats strong {
             color: #f0f0ff;
             margin-right: 5px;
-            font-weight: 500;
         }
 
         .btn-refresh {
@@ -348,14 +341,12 @@
             font-family: monospace;
             color: #d0d0e0;
             cursor: pointer;
-            transition: all 0.2s;
         }
 
         .btn-refresh:hover {
             background: #1c1c24;
             border-color: #fff;
             color: white;
-            transform: translateY(-1px);
         }
 
         .footer-note {
@@ -365,8 +356,6 @@
             padding-top: 20px;
             margin-top: 10px;
             border-top: 1px solid #1c1c22;
-            font-family: monospace;
-            transition: color 0.2s;
         }
 
         .empty-msg {
@@ -374,10 +363,17 @@
             padding: 48px 20px;
             color: #5e5e78;
             font-family: monospace;
-            font-style: italic;
         }
 
-        /* modal smoother */
+        .points-value {
+            font-weight: bold;
+            color: #a0f0a0;
+        }
+
+        .rank-1 { color: #ffd700; }
+        .rank-2 { color: #c0c0c0; }
+        .rank-3 { color: #cd7f32; }
+
         .modal-overlay {
             display: none;
             position: fixed;
@@ -385,12 +381,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.92);
-            backdrop-filter: blur(3px);
+            background: rgba(0,0,0,0.95);
             z-index: 1000;
             justify-content: center;
             align-items: center;
-            transition: opacity 0.2s;
         }
 
         .modal {
@@ -399,19 +393,12 @@
             padding: 28px;
             max-width: 420px;
             width: 90%;
-            animation: modalPop 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.2);
-        }
-
-        @keyframes modalPop {
-            from { opacity: 0; transform: scale(0.96); }
-            to { opacity: 1; transform: scale(1); }
         }
 
         .modal h3 {
             color: #ffffff;
             margin-bottom: 14px;
             font-family: monospace;
-            font-weight: 450;
             font-size: 18px;
         }
 
@@ -436,7 +423,6 @@
             font-size: 12px;
             font-family: monospace;
             color: #ddddff;
-            transition: all 0.2s;
         }
 
         .modal-btn:hover {
@@ -453,41 +439,52 @@
             border-color: #ff7777;
         }
 
-        .deleted-section {
-            margin-top: 0;
-        }
-
         .deleted-item {
             font-size: 11px;
             color: #81819b;
             padding: 8px 0;
             font-family: monospace;
             border-bottom: 1px solid #15151c;
-            transition: background 0.1s;
         }
         .deleted-item code {
             background: #111;
             color: #ffb7b7;
         }
 
+        .quota-item {
+            padding: 16px;
+            border-bottom: 1px solid #1a1a22;
+        }
+        .quota-week {
+            font-size: 14px;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+        .quota-stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+        .quota-passed { color: #a0f0a0; }
+        .quota-failed { color: #ffa0a0; }
+        .quota-users {
+            font-size: 11px;
+            color: #8b8b9e;
+            margin-top: 8px;
+            padding-left: 16px;
+        }
+        .quota-users code {
+            background: #111116;
+            padding: 2px 6px;
+        }
+
         @media (max-width: 700px) {
             body { padding: 16px; }
             .stat-num { font-size: 30px; }
             th, td { padding: 10px 12px; font-size: 10px; }
-            .filter-btn { padding: 5px 12px; }
-        }
-
-        /* custom scroll smoothness */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #050505;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #2c2c36;
-            border-radius: 6px;
+            .tab-btn { padding: 10px 16px; font-size: 12px; }
         }
     </style>
 </head>
@@ -495,60 +492,102 @@
 <div class="wrap">
     <div class="top">
         <h1>mod panel</h1>
-        <p>cases · sanctions · moderator audit</p>
+        <p>cases · points · quota history · moderator audit</p>
     </div>
 
-    <div class="stat-row">
-        <div class="stat-card"><div class="stat-num" id="totalCases">0</div><div class="stat-label">total cases</div></div>
-        <div class="stat-card"><div class="stat-num" id="warnings">0</div><div class="stat-label">warnings</div></div>
-        <div class="stat-card"><div class="stat-num" id="bans">0</div><div class="stat-label">bans</div></div>
-        <div class="stat-card"><div class="stat-num" id="demotions">0</div><div class="stat-label">demotions</div></div>
-        <div class="stat-card"><div class="stat-num" id="exploits">0</div><div class="stat-label">exploits</div></div>
+    <!-- Tab Navigation -->
+    <div class="tab-nav">
+        <button class="tab-btn active" data-tab="cases">cases</button>
+        <button class="tab-btn" data-tab="points">points</button>
+        <button class="tab-btn" data-tab="quota">quota history</button>
     </div>
 
-    <div class="card">
-        <div class="card-head">
-            <h2>recent cases</h2>
-            <button class="btn-refresh" onclick="fetchData()">⟳ refresh</button>
+    <!-- ==================== TAB 1: CASES ==================== -->
+    <div id="tab-cases" class="tab-content active">
+        <div class="stat-row">
+            <div class="stat-card"><div class="stat-num" id="totalCases">0</div><div class="stat-label">total cases</div></div>
+            <div class="stat-card"><div class="stat-num" id="warnings">0</div><div class="stat-label">warnings</div></div>
+            <div class="stat-card"><div class="stat-num" id="bans">0</div><div class="stat-label">bans</div></div>
+            <div class="stat-card"><div class="stat-num" id="demotions">0</div><div class="stat-label">demotions</div></div>
+            <div class="stat-card"><div class="stat-num" id="exploits">0</div><div class="stat-label">exploits</div></div>
         </div>
-        <div class="search-area">
-            <input type="text" class="search-input" id="searchInput" placeholder="search by case id, target, or moderator" onkeyup="debouncedSearch()">
+
+        <div class="card">
+            <div class="card-head">
+                <h2>recent cases</h2>
+                <button class="btn-refresh" onclick="fetchCasesData()">⟳ refresh</button>
+            </div>
+            <div class="search-area">
+                <input type="text" class="search-input" id="searchInput" placeholder="search by case id, target, or moderator" onkeyup="debouncedSearch()">
+            </div>
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all" onclick="filterCases('all')">all</button>
+                <button class="filter-btn" data-filter="warning" onclick="filterCases('warning')">warnings</button>
+                <button class="filter-btn" data-filter="ban" onclick="filterCases('ban')">bans</button>
+                <button class="filter-btn" data-filter="tempban" onclick="filterCases('tempban')">temp bans</button>
+                <button class="filter-btn" data-filter="demotion" onclick="filterCases('demotion')">demotions</button>
+                <button class="filter-btn" data-filter="exploit" onclick="filterCases('exploit')">exploits</button>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>case id</th><th>type</th><th>target</th><th>moderator</th><th>status</th><th>date</th><th></th></tr></thead>
+                    <tbody id="casesBody"><tr><td colspan="7" class="empty-msg">⟳ fetching data...</td></tr></tbody>
+                </table>
+            </div>
         </div>
-        <div class="filters" id="filterContainer">
-            <button class="filter-btn active" data-filter="all" onclick="filterCases('all')">all</button>
-            <button class="filter-btn" data-filter="warning" onclick="filterCases('warning')">warnings</button>
-            <button class="filter-btn" data-filter="ban" onclick="filterCases('ban')">bans</button>
-            <button class="filter-btn" data-filter="tempban" onclick="filterCases('tempban')">temp bans</button>
-            <button class="filter-btn" data-filter="demotion" onclick="filterCases('demotion')">demotions</button>
-            <button class="filter-btn" data-filter="exploit" onclick="filterCases('exploit')">exploits</button>
+
+        <div class="card">
+            <div class="card-head"><h2>top moderators</h2></div>
+            <div id="moderatorsList" class="mod-list"><div class="empty-msg">loading moderators...</div></div>
         </div>
-        <div class="table-wrap">
-            <table>
-                <thead>
-                    <tr><th>case id</th><th>type</th><th>target</th><th>moderator</th><th>status</th><th>date</th><th></th></tr>
-                </thead>
-                <tbody id="casesBody"><tr><td colspan="7" class="empty-msg">⟳ fetching data...</td></tr></tbody>
-            </table>
+
+        <div class="card">
+            <div class="card-head"><h2>recent deletions</h2></div>
+            <div id="deletedList" class="mod-list"><div class="empty-msg">no recent deletions</div></div>
         </div>
     </div>
 
-    <div class="card">
-        <div class="card-head"><h2>top moderators</h2></div>
-        <div id="moderatorsList" class="mod-list"><div class="empty-msg">loading moderators...</div></div>
+    <!-- ==================== TAB 2: POINTS ==================== -->
+    <div id="tab-points" class="tab-content">
+        <div class="stat-row">
+            <div class="stat-card"><div class="stat-num" id="totalUsers">0</div><div class="stat-label">total users</div></div>
+            <div class="stat-card"><div class="stat-num" id="totalPoints">0</div><div class="stat-label">total points</div></div>
+            <div class="stat-card"><div class="stat-num" id="topPoints">0</div><div class="stat-label">top score</div></div>
+        </div>
+
+        <div class="card">
+            <div class="card-head">
+                <h2>points leaderboard</h2>
+                <button class="btn-refresh" onclick="fetchPointsData()">⟳ refresh</button>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>rank</th><th>user</th><th>points</th><th>last updated</th></tr></thead>
+                    <tbody id="pointsBody"><tr><td colspan="4" class="empty-msg">loading points data...</td></tr></tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
-    <div class="card">
-        <div class="card-head"><h2>recent deletions</h2></div>
-        <div id="deletedList" class="mod-list"><div class="empty-msg">no recent deletions</div></div>
+    <!-- ==================== TAB 3: QUOTA HISTORY ==================== -->
+    <div id="tab-quota" class="tab-content">
+        <div class="card">
+            <div class="card-head">
+                <h2>weekly quota check history</h2>
+                <button class="btn-refresh" onclick="fetchQuotaData()">⟳ refresh</button>
+            </div>
+            <div id="quotaList" class="mod-list"><div class="empty-msg">loading quota history...</div></div>
+        </div>
     </div>
 
     <div class="footer-note" id="lastUpdated">last updated: —</div>
 </div>
 
+<!-- Delete Modal -->
 <div id="deleteModal" class="modal-overlay">
     <div class="modal">
-        <h3>⛔ delete case</h3>
-        <p>are you sure you want to delete case <code id="deleteCaseId"></code>?<br>this action requires discord confirmation.</p>
+        <h3>delete case</h3>
+        <p>are you sure you want to delete case <code id="deleteCaseId"></code>?<br>this action cannot be undone.</p>
         <div class="modal-buttons">
             <button class="modal-btn" onclick="closeDeleteModal()">cancel</button>
             <button class="modal-btn modal-btn-confirm" onclick="confirmDelete()">delete</button>
@@ -557,36 +596,30 @@
 </div>
 
 <script>
-    // ========== ENHANCED SMOOTHNESS ==========
+    // ========== CONFIGURATION ==========
+    const GITHUB_USERNAME = "Doraemon2012314";
+    const GITHUB_REPO = "esmodweb";
+
+    // ========== TAB SWITCHING ==========
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const tabName = this.getAttribute('data-tab');
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+            if (tabName === 'cases') fetchCasesData();
+            else if (tabName === 'points') fetchPointsData();
+            else if (tabName === 'quota') fetchQuotaData();
+        });
+    });
+
+    // ========== CASES DATA ==========
     let allCases = [];
     let currentFilter = 'all';
     let pendingDelete = null;
-    let deletedCases = [];
     let searchDebounceTimer = null;
 
-    // helper: formatting
-    function getTagClass(type) {
-        const map = {'warning':'tag-warning','ban':'tag-ban','tempban':'tag-tempban','demotion':'tag-demotion','exploit':'tag-exploit'};
-        return map[type] || 'tag-warning';
-    }
-    function getStatusClass(status) {
-        if (!status || status === 'awaiting' || status === 'Awaiting') return 'status-pending';
-        if (status === 'approved' || status === 'APPROVED') return 'status-approved';
-        if (status && (status.startsWith('denied') || status.startsWith('DENIED'))) return 'status-denied';
-        return 'status-pending';
-    }
-    function formatStatus(status) {
-        if (!status || status === 'awaiting' || status === 'Awaiting') return 'pending';
-        if (status === 'approved' || status === 'APPROVED') return 'approved';
-        if (status && (status.startsWith('denied') || status.startsWith('DENIED'))) return 'denied';
-        return status || 'pending';
-    }
-    function formatDate(dateStr) {
-        if (!dateStr) return '-';
-        const d = new Date(dateStr);
-        if (isNaN(d.getTime())) return dateStr;
-        return `${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`;
-    }
     function escapeHtml(str) {
         if (!str) return '';
         return str.replace(/[&<>]/g, function(m) {
@@ -597,19 +630,44 @@
         });
     }
 
-    // display functions with micro animations (via class reflow)
+    function formatDate(dateStr) {
+        if (!dateStr) return '-';
+        const d = new Date(dateStr);
+        if (isNaN(d.getTime())) return dateStr;
+        return `${d.getMonth()+1}/${d.getDate()}/${d.getFullYear()}`;
+    }
+
+    function getTagClass(type) {
+        const map = {'warning':'badge-warning','ban':'badge-ban','tempban':'badge-tempban','demotion':'badge-demotion','exploit':'badge-exploit'};
+        return map[type] || 'badge-warning';
+    }
+
+    function getStatusClass(status) {
+        if (!status || status === 'awaiting' || status === 'Awaiting') return 'status-pending';
+        if (status === 'approved' || status === 'APPROVED') return 'status-approved';
+        if (status && (status.startsWith('denied') || status.startsWith('DENIED'))) return 'status-denied';
+        return 'status-pending';
+    }
+
+    function formatStatus(status) {
+        if (!status || status === 'awaiting' || status === 'Awaiting') return 'pending';
+        if (status === 'approved' || status === 'APPROVED') return 'approved';
+        if (status && (status.startsWith('denied') || status.startsWith('DENIED'))) return 'denied';
+        return status || 'pending';
+    }
+
     function displayCases(cases) {
         const tbody = document.getElementById('casesBody');
         if (!cases || cases.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="7" class="empty-msg">✖ no cases found</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" class="empty-msg">no cases found</td></tr>';
             return;
         }
         let html = '';
-        for (let i = 0; i < Math.min(cases.length, 120); i++) {
+        for (let i = 0; i < Math.min(cases.length, 100); i++) {
             const c = cases[i];
-            html += `<tr style="transition: background 0.1s;">
+            html += `<tr>
                 <td><code>${escapeHtml(c.case_id || '?')}</code></td>
-                <td><span class="tag ${getTagClass(c.type)}">${escapeHtml(c.type || 'unknown')}</span></td>
+                <td><span class="badge ${getTagClass(c.type)}">${escapeHtml(c.type || 'unknown')}</span></td>
                 <td>${escapeHtml(c.target || '?')}</td>
                 <td><code>${escapeHtml(c.moderator || '?')}</code></td>
                 <td><span class="status ${getStatusClass(c.status)}">${formatStatus(c.status)}</span></td>
@@ -627,7 +685,7 @@
             return;
         }
         let html = '';
-        for (let i = 0; i < Math.min(mods.length, 12); i++) {
+        for (let i = 0; i < Math.min(mods.length, 10); i++) {
             const m = mods[i];
             html += `<div class="mod-item">
                 <div class="mod-name"><code>${escapeHtml(m.id || 'unknown')}</code></div>
@@ -646,7 +704,7 @@
     function displayDeleted(deleted) {
         const container = document.getElementById('deletedList');
         if (!deleted || deleted.length === 0) {
-            container.innerHTML = '<div class="empty-msg">🗑️ no recent deletions</div>';
+            container.innerHTML = '<div class="empty-msg">no recent deletions</div>';
             return;
         }
         let html = '';
@@ -662,53 +720,30 @@
         container.innerHTML = html;
     }
 
-    // fetch with smooth loading indicator
-    async function fetchData() {
-        const refreshBtn = document.querySelector('.btn-refresh');
-        const originalText = refreshBtn?.innerHTML;
-        if (refreshBtn) refreshBtn.innerHTML = '⟳ loading...';
+    async function fetchCasesData() {
         try {
-            const res = await fetch('data.json?v=' + Date.now());
+            const res = await fetch(`https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/data.json?v=${Date.now()}`);
             if (res.ok) {
                 const data = await res.json();
                 document.getElementById('totalCases').innerText = data.total_cases || 0;
                 document.getElementById('warnings').innerText = data.cases_by_type?.warning || 0;
-                const totalBans = (data.cases_by_type?.ban || 0) + (data.cases_by_type?.tempban || 0);
-                document.getElementById('bans').innerText = totalBans;
+                document.getElementById('bans').innerText = (data.cases_by_type?.ban || 0) + (data.cases_by_type?.tempban || 0);
                 document.getElementById('demotions').innerText = data.cases_by_type?.demotion || 0;
                 document.getElementById('exploits').innerText = data.cases_by_type?.exploit || 0;
                 allCases = data.cases || [];
-                applyFilterAndRender();
+                if (currentFilter === 'all') displayCases(allCases);
+                else displayCases(allCases.filter(c => c.type === currentFilter));
                 displayModerators(data.moderators || []);
-                if (data.last_updated) {
-                    document.getElementById('lastUpdated').innerHTML = `last updated: ${new Date(data.last_updated).toLocaleString()}`;
-                } else {
-                    document.getElementById('lastUpdated').innerHTML = `last updated: ${new Date().toLocaleString()}`;
-                }
-            } else {
-                document.getElementById('casesBody').innerHTML = '<tr><td colspan="7" class="empty-msg">⚠️ failed to load data.json</td></tr>';
             }
-            // fetch deletions log
-            const delRes = await fetch('deleted_cases.json?v=' + Date.now());
+            const delRes = await fetch(`https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/deleted_cases.json?v=${Date.now()}`);
             if (delRes.ok) {
                 const delData = await delRes.json();
-                deletedCases = Array.isArray(delData) ? delData : [];
-                displayDeleted(deletedCases);
-            } else {
-                // no file: soft ignore
-                if(deletedCases.length===0) displayDeleted([]);
+                displayDeleted(Array.isArray(delData) ? delData : []);
             }
         } catch (err) {
             console.warn(err);
-            document.getElementById('casesBody').innerHTML = '<tr><td colspan="7" class="empty-msg">🔌 network error / missing data</td></tr>';
-        } finally {
-            if (refreshBtn) refreshBtn.innerHTML = originalText || '⟳ refresh';
+            document.getElementById('casesBody').innerHTML = '<tr><td colspan="7" class="empty-msg">network error</td></tr>';
         }
-    }
-
-    function applyFilterAndRender() {
-        if (currentFilter === 'all') displayCases(allCases);
-        else displayCases(allCases.filter(c => c.type === currentFilter));
     }
 
     function filterCases(type) {
@@ -717,15 +752,13 @@
             if (btn.getAttribute('data-filter') === type) btn.classList.add('active');
             else btn.classList.remove('active');
         });
-        applyFilterAndRender();
+        if (type === 'all') displayCases(allCases);
+        else displayCases(allCases.filter(c => c.type === type));
     }
 
     function searchCasesDirect() {
         const keyword = document.getElementById('searchInput').value.toLowerCase().trim();
-        if (!keyword) {
-            applyFilterAndRender();
-            return;
-        }
+        if (!keyword) return filterCases(currentFilter);
         const filtered = allCases.filter(c =>
             (c.case_id && c.case_id.toLowerCase().includes(keyword)) ||
             (c.target && c.target.toLowerCase().includes(keyword)) ||
@@ -736,49 +769,107 @@
 
     function debouncedSearch() {
         if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
-        searchDebounceTimer = setTimeout(() => {
-            searchCasesDirect();
-        }, 280);
+        searchDebounceTimer = setTimeout(() => searchCasesDirect(), 280);
     }
 
-    // modal interactions (smooth)
     function showDeleteModal(caseId) {
         pendingDelete = caseId;
         document.getElementById('deleteCaseId').innerText = caseId;
-        const modal = document.getElementById('deleteModal');
-        modal.style.display = 'flex';
-        modal.style.opacity = '1';
+        document.getElementById('deleteModal').style.display = 'flex';
     }
 
     function closeDeleteModal() {
-        const modal = document.getElementById('deleteModal');
-        modal.style.display = 'none';
+        document.getElementById('deleteModal').style.display = 'none';
         pendingDelete = null;
     }
 
     function confirmDelete() {
         if (!pendingDelete) return;
-        const GUILD_ID = 1392627166549905620;
-        const DEMO_REQ_CH = 1392634689885307021;
-        window.open(`https://discord.com/channels/${GUILD_ID}/${DEMO_REQ_CH}`, '_blank');
-        alert(`📌 to delete case ${pendingDelete}:\n1. go to discord channel\n2. run /deletecase ${pendingDelete} reason: violation handling`);
+        window.open(`https://discord.com/channels/1392627166549905620/1392634689885307021`, '_blank');
+        alert(`to delete case ${pendingDelete}:\n1. go to discord\n2. run /deletecase ${pendingDelete} reason: violation handling`);
         closeDeleteModal();
     }
 
-    // background smooth refresh every 20s
-    let refreshInterval;
-    function startAutoRefresh() {
-        if (refreshInterval) clearInterval(refreshInterval);
-        refreshInterval = setInterval(() => {
-            fetchData();
-        }, 20000);
+    // ========== POINTS DATA ==========
+    async function fetchPointsData() {
+        try {
+            const res = await fetch(`https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/points_data.json?v=${Date.now()}`);
+            if (res.ok) {
+                const data = await res.json();
+                const points = data.points || [];
+                points.sort((a, b) => b.points - a.points);
+                let totalPoints = 0;
+                let topScore = 0;
+                let html = '';
+                for (let i = 0; i < points.length; i++) {
+                    const p = points[i];
+                    totalPoints += p.points;
+                    if (p.points > topScore) topScore = p.points;
+                    let rankDisplay = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i+1}`;
+                    let rankClass = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : '';
+                    html += `<tr><td class="${rankClass}">${rankDisplay}</td>
+                             <td><code>${escapeHtml(p.username || p.user_id)}</code></td>
+                             <td class="points-value">${p.points}</td>
+                             <td>${formatDate(p.last_updated)}</td></tr>`;
+                }
+                document.getElementById('totalUsers').innerText = points.length;
+                document.getElementById('totalPoints').innerText = totalPoints;
+                document.getElementById('topPoints').innerText = topScore;
+                document.getElementById('pointsBody').innerHTML = html || '<tr><td colspan="4" class="empty-msg">no points data</td></tr>';
+            }
+        } catch (err) {
+            console.error(err);
+        }
     }
 
-    // init with extra smoothness
-    fetchData().then(() => {
-        startAutoRefresh();
-    });
-    // click outside modal close
+    // ========== QUOTA HISTORY DATA ==========
+    async function fetchQuotaData() {
+        try {
+            const res = await fetch(`https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPO}/main/quota_history.json?v=${Date.now()}`);
+            if (res.ok) {
+                const data = await res.json();
+                const history = data.quota_history || [];
+                const container = document.getElementById('quotaList');
+                if (history.length === 0) {
+                    container.innerHTML = '<div class="empty-msg">no quota history available</div>';
+                    return;
+                }
+                let html = '';
+                for (const q of history) {
+                    const date = new Date(q.executed_at);
+                    html += `<div class="quota-item">
+                        <div class="quota-week">Week ${q.week_number}, ${q.year} — ${date.toLocaleDateString()}</div>
+                        <div class="quota-stats">
+                            <span class="quota-passed">✓ Passed: ${q.passed_count}</span>
+                            <span class="quota-failed">✗ Failed: ${q.failed_count}</span>
+                        </div>
+                        <div class="quota-users">
+                            <strong>Passed (cleared):</strong> ${q.passed_users.map(u => `<code>${escapeHtml(u.name)}</code>`).join(', ') || 'none'}<br>
+                            <strong>Failed:</strong> ${q.failed_users.map(u => `<code>${escapeHtml(u.name)} (${u.points} pts)</code>`).join(', ') || 'none'}
+                        </div>
+                        <div style="font-size:10px; color:#555; margin-top:8px;">executed by: ${escapeHtml(q.executed_by)}</div>
+                    </div>`;
+                }
+                container.innerHTML = html;
+            }
+        } catch (err) {
+            console.error(err);
+            document.getElementById('quotaList').innerHTML = '<div class="empty-msg">unable to load quota history</div>';
+        }
+    }
+
+    // ========== INITIAL LOAD ==========
+    fetchCasesData();
+    fetchPointsData();
+    fetchQuotaData();
+
+    setInterval(() => {
+        const activeTab = document.querySelector('.tab-btn.active').getAttribute('data-tab');
+        if (activeTab === 'cases') fetchCasesData();
+        else if (activeTab === 'points') fetchPointsData();
+        else if (activeTab === 'quota') fetchQuotaData();
+    }, 20000);
+
     window.onclick = function(e) {
         const modal = document.getElementById('deleteModal');
         if (e.target === modal) closeDeleteModal();
